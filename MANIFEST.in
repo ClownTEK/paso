@@ -1,0 +1,5 @@
+recursive-include po *
+recursive-include qt4 *
+recursive-include src *
+prune paso
+include AUTHORS ChangeLog COPYING README TODO

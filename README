@@ -1,0 +1,37 @@
+Paso is installation builder for Pardus Linux.
+
+Pardus installs by YALI (Yet Another Linux Installer).
+YALI sets up the system by pisi packages from the installation media.
+Paso just builds the special package repository for installation,
+it's not another installation method.
+
+Prepare process uses for create paso files that contains
+repository packages list and special packages.
+Package list takes from installed Pardus system
+not from internet repositories.
+
+Users can be install or remove packages on their system and
+create paso file for sharing.
+
+Every user can bulid iso file with bulid process from paso file.
+Paso build process collects the packages from local packages,
+Pardus installation CD's and internet repos.
+
+Paso files are small tar.gz packages. They can be easily share and
+everybody bulid iso images on their own system.
+
+Fore more information about YALI, visit
+http://www.pardus.org.tr/eng/projeler/yali
+
+
+
+REQUIREMENTS
+    - python >= 2.5
+    - qt >= 4.5
+    - cdrtools >= 2.01.01_alpha63
+
+
+
+TRANSLATION
+
+    I dont think ready for traslation yet, keep a close watch on /po dir...

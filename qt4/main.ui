@@ -1,0 +1,1035 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>619</width>
+    <height>535</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>0</y>
+     <width>601</width>
+     <height>76</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string/>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>316</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Unofficial Special Installation builder for Pardus Linux</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>316</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Sans Serif</family>
+      <pointsize>24</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>PASO</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>90</y>
+     <width>601</width>
+     <height>351</height>
+    </rect>
+   </property>
+   <property name="tabPosition">
+    <enum>QTabWidget::North</enum>
+   </property>
+   <property name="tabShape">
+    <enum>QTabWidget::Rounded</enum>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>30</height>
+    </size>
+   </property>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Build</string>
+    </attribute>
+    <widget class="QCheckBox" name="checkBox_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>250</y>
+       <width>196</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Don't read paso file again</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_17">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>510</x>
+       <y>280</y>
+       <width>80</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Build</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_18">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>280</y>
+       <width>80</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Analyze</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_18">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>130</y>
+       <width>226</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Alternative package directory</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_11">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>251</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="frame">
+      <bool>true</bool>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_9">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>150</y>
+       <width>221</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="frame">
+      <bool>true</bool>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_10">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>251</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="frame">
+      <bool>true</bool>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox_7">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>150</y>
+       <width>21</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_8">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>210</y>
+       <width>251</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="frame">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_11">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>210</y>
+       <width>31</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>..</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_15">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>30</y>
+       <width>31</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>..</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_11">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>261</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Paso file</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>190</y>
+       <width>151</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Output directory</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_19">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>211</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>CD-ROM / Mounted ISO directory</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_12">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>150</y>
+       <width>31</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>..</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_13">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>90</y>
+       <width>31</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>..</string>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_5">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>10</y>
+       <width>271</width>
+       <height>261</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Info</string>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+     <widget class="QLineEdit" name="lineEdit_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>251</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="frame">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_20">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>53</width>
+        <height>15</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_21">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>91</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Summary</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>100</y>
+        <width>251</width>
+        <height>60</height>
+       </rect>
+      </property>
+      <property name="acceptRichText">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_7">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>170</y>
+        <width>251</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QLabel" name="label_15">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>10</y>
+         <width>121</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Package found</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_12">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>30</y>
+         <width>121</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Needs download</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_17">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>50</y>
+         <width>121</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Download size</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_13">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>50</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string notr="true">0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_16">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>50</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_14">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>50</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QCheckBox" name="checkBox_6">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>280</y>
+       <width>271</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Don't read alternative packages again</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Prepare</string>
+    </attribute>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>510</x>
+       <y>280</y>
+       <width>80</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Go to crazy</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>280</y>
+       <width>181</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Don't read repos again</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>250</y>
+       <width>261</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Don't read installed packages again</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>261</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Output directory</string>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>10</y>
+       <width>271</width>
+       <height>261</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Info</string>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>251</width>
+        <height>30</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>53</width>
+        <height>15</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>91</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Summary</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>100</y>
+        <width>251</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="readOnly">
+       <bool>false</bool>
+      </property>
+      <property name="acceptRichText">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_8">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>170</y>
+        <width>251</width>
+        <height>76</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QLabel" name="label_22">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>10</y>
+         <width>121</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Package found</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_23">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>30</y>
+         <width>121</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Append to paso file</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_24">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>50</y>
+         <width>121</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>ISO size</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_25">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>50</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string notr="true">0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_26">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>50</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_27">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>50</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_6">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>251</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>261</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>PARDUS_ROOT</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_9">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>90</y>
+       <width>31</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>..</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_7">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>251</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_10">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>30</y>
+       <width>31</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>..</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>130</y>
+       <width>261</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>CD-ROM / Mounted ISO directory</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_3">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>150</y>
+       <width>221</width>
+       <height>30</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>150</y>
+       <width>21</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_4">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>150</y>
+       <width>31</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>..</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>210</y>
+       <width>31</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>..</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox_4">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>210</y>
+       <width>21</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>190</y>
+       <width>261</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Alternative package directory</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_5">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>210</y>
+       <width>221</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_4">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>449</y>
+     <width>601</width>
+     <height>76</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Progress</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+   </property>
+   <widget class="QProgressBar" name="progressBar">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>15</x>
+      <y>30</y>
+      <width>571</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
+    <property name="value">
+     <number>100</number>
+    </property>
+    <property name="textVisible">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>15</x>
+      <y>45</y>
+      <width>571</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>80</y>
+     <width>80</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_7">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>80</y>
+     <width>80</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>About</string>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_8">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>80</y>
+     <width>80</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Options</string>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

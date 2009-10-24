@@ -1,0 +1,12 @@
+- About menu dialog
+- Add tooltips to gui elements for help
+- İnşa sürecinde belirtilen adreste bulunamayan paket
+  diğer depolarda da aranmalı
+- packages.txt develeops as an XML file
+    - Package sizes
+    - Paso descriptions, author, date etc.
+- .conf File support
+- Options menu dialog
+- Release version 1.0
+- Down to repo parsing process time
+- Gui freezing while process running, do something
