@@ -342,6 +342,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
         bIface.setOptions(self, const.OPT_FORCEPASOREAD_ID, False )
         bIface.setOptions(self, const.OPT_FORCECDREAD_ID, False )
         bIface.setOptions(self, const.OPT_FORCEALTREAD_ID, False )
+        self.check_b_edit("")
         if not self.__error:
             self.__build_button.setEnabled(True)
             self.__updateProgress(100, 100, 100, 100, const.JOB_ALZ_ID,self.__jobDesc[const.JOB_SUCCES_ID])
