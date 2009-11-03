@@ -14,6 +14,7 @@ from prepareIface import pIface
 from buildIface import bIface
 from lib import ratioCalc
 from lib import stripFilename
+from about import aboutDialog
 
 
 
@@ -34,6 +35,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
         self.__jobDesc = {}     #{ID:"text",..}
         self.__errDesc = {}
         self.__error = False
+        self.__aboutDialog = aboutDialog()
 
         #Init interfaces
         pIface.__init__(self)
@@ -370,6 +372,8 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
 
 
 
+
+
 ################################################################################
 #
 #   PROGRESS SECTION ACTIONS
@@ -395,6 +399,29 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
         errText = self.__jobDesc[jobId]+". "+self.__errDesc[errorCode]+":"+errorData
         self.__prgText.setText(errText)
         print( errText)
+
+
+
+
+
+
+
+
+
+################################################################################
+#
+#   OTHER ACTIONS
+#
+################################################################################
+
+
+    #About button _______________________________________________
+    @QtCore.pyqtSignature("void")
+    def on_pushButton_7_clicked(self):
+        #
+        self.__aboutDialog.show()
+
+
 
 
 

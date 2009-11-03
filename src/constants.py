@@ -18,6 +18,13 @@ const = _const()
 
 #Include const and use global values below
 
+const.NAME = "Paso"
+const.VERSION = "Testing"
+const.WEBPAGE = "http://github.com/alierkanimrek/paso"
+const.DEVELOPERS = "Ali Erkan İMREK  alierkanimrek[at]gmail.com <br> \
+                    "
+const.TRANSLATORS = ""
+
 const.APP_NAME = "paso"
 const.APP_I18NDIR = "/usr/share/locale/"
 
