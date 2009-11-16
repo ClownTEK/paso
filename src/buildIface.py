@@ -21,8 +21,7 @@ from isobuilder import isoBuilder
 class bIface():
     #Interface class between build operation modules and GUI
 
-    onAction = eventHandler()    #(totalJobs, currentJob, totalElements, currentElement, jobName, elementName)
-    onError = eventHandler()    #(errorCode, errorData)
+
 
 
     def __init__(self):
@@ -39,6 +38,9 @@ class bIface():
 
 
         #Events
+        self.onAction = eventHandler()    #(totalJobs, currentJob, totalElements, currentElement, jobName, elementName)
+        self.onError = eventHandler()    #(errorCode, errorData)
+
         self.__pao.onAddPackage.addEventListener(self.__onProgress)
         self.__pao.onError.addEventListener(self.__onError)
         self.__iso.onAddPackage.addEventListener(self.__onProgress)
@@ -57,14 +59,17 @@ class bIface():
 
 
     def __clear(self):
-        self.__options = {const.OPT_ALTDIRCHECK_ID:False,
-                            const.OPT_ISODIR_ID:"",
-                            const.OPT_PASOFILE_ID:"",
-                            const.OPT_OUTDIR_ID:"",
-                            const.OPT_ALTDIR_ID:"",
-                            const.OPT_FORCEPASOREAD_ID: False,
-                            const.OPT_FORCEALTREAD_ID: False,
-                            const.OPT_FORCECDREAD_ID: False}
+        self.altDirCheck = False
+        self.isoDir = ""
+        self.pasoFile = ""
+        self.outDir = ""
+        self.altDir = ""
+        self.readPasoCheck = True
+        self.readAltCheck = True
+        self.forcePasoRead =  False
+        self.forceAltRead =  False
+        self.forceCdRead =  False
+
 
 
 
@@ -107,6 +112,15 @@ class bIface():
 
 
 
+    def getInfo(self, filename):
+        #
+        self.__currentJob = const.JOB_PAO_ID
+        self.__totalJob = 1
+        self.__passedJob = 1
+        if self.__pao.open(filename):
+            return( self.__pao.getInfo() )
+        return(False)
+
 
 
 
@@ -123,16 +137,16 @@ class bIface():
         self.__newMission()
 
         #Find job count and update task list
-        if self.__options[const.OPT_ALTDIRCHECK_ID] and \
-                            (self.__alt.isEmpty() or not self.__options[const.OPT_READALTCHECK_ID] ) \
-                            or self.__options[const.OPT_FORCEALTREAD_ID]:
+        if self.altDirCheck and \
+                            (self.__alt.isEmpty() or not self.readAltCheck ) \
+                            or self.forceAltRead:
             self.__totalJob += 1
         else:   doReadAlt = False
-        if self.__pao.isInfoEmpty() or not self.__options[const.OPT_READPASOCHECK_ID] \
-                                     or self.__options[const.OPT_FORCEPASOREAD_ID]:
+        if self.__pao.isPackagesEmpty() or not self.readPasoCheck \
+                                     or self.forcePasoRead:
             self.__totalJob += 1
         else:   doReadPaso = False
-        if self.__iso.isEmpty() or self.__options[const.OPT_FORCECDREAD_ID]:
+        if self.__iso.isEmpty() or self.forceCdRead:
             self.__totalJob += 1
         else: doReadIso = False
 
@@ -143,15 +157,15 @@ class bIface():
         if doReadPaso and not self.__error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_PAO_ID
-            self.__pao.loadInfo(self.__options[const.OPT_PASOFILE_ID])
+            self.__pao.load()
         if doReadIso and not self.__error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_ISO_ID
-            self.__iso.load(self.__options[const.OPT_ISODIR_ID]+const.OPT_CDREPOPATH_VAL)
+            self.__iso.load(self.isoDir+const.OPT_CDREPOPATH_VAL)
         if doReadAlt and not self.__error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_ALT_ID
-            self.__alt.load(self.__options[const.OPT_ALTDIR_ID])
+            self.__alt.load(self.altDir)
         if not self.__error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_CHC_ID
@@ -165,6 +179,10 @@ class bIface():
 
 
 
+    def getReport(self):
+        return( [ self.__alz.getCountOfPackages(), self.__alz.getSizeOfTotal(),
+                    self.__alz.getCountOfRemotes(), self.__alz.getSizeOfRemotes(),
+                    self.__alz.getSizeOfISO() ]  )
 
 
 
@@ -191,11 +209,11 @@ class bIface():
         if not self.__error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_BRP_ID
-            self.__brp.build(self.__alz, self.__options[const.OPT_OUTDIR_ID], self.__options[const.OPT_PASOFILE_ID])
+            self.__brp.build(self.__alz, self.outDir, self.pasoFile)
         if not self.__error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_BIS_ID
-            self.__bis.build( self.__options[const.OPT_PASOFILE_ID], self.__options[const.OPT_OUTDIR_ID], self.__options[const.OPT_ISODIR_ID])
+            self.__bis.build( self.pasoFile, self.outDir, self.isoDir)
 
 
 

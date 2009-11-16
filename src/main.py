@@ -12,9 +12,9 @@ from constants import const
 from ui_main import Ui_Dialog
 from prepareIface import pIface
 from buildIface import bIface
-from lib import ratioCalc
-from lib import stripFilename
+from lib import stripFilename, getPardusRelease, ratioCalc
 from about import aboutDialog
+import datetime
 
 
 
@@ -24,7 +24,7 @@ _ = t.ugettext
 
 
 
-class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
+class mainDialog(QtGui.QDialog, Ui_Dialog):
     #Controls all GUI operations and manage operation modules via interface clases
 
 
@@ -32,14 +32,12 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
         #
         QtGui.QDialog.__init__(self)
         self.setupUi(self)
+        self.pIface = pIface()
+        self.bIface = bIface()
         self.__jobDesc = {}     #{ID:"text",..}
         self.__errDesc = {}
         self.__error = False
         self.__aboutDialog = aboutDialog()
-
-        #Init interfaces
-        pIface.__init__(self)
-        bIface.__init__(self)
 
         #Aliases for GUI objects
         self.__isoDir_check = self.checkBox_5
@@ -66,7 +64,24 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
         self.__bisoDir_edit = self.lineEdit_10
         self.__baltDir_edit = self.lineEdit_9
         self.__baltDir_check = self.checkBox_7
-        #self.__stop_button = self.pushButton_xx        #Doesn't work, GUI is freeze until python process end over
+        self.__infoPName_edit = self.lineEdit
+        self.__infoPSumm_edit = self.lineEdit_4
+        self.__infoPDesc_edit = self.textBrowser_6
+        self.__infoPHome_edit = self.lineEdit_13
+        self.__infoBName_label = self.label_33
+        self.__infoBSumm_line = self.lineEdit_12
+        self.__infoBDesc_text = self.textBrowser_5
+        self.__infoBHome_line = self.label_26
+        self.__infoBRele_line = self.label_28
+        self.__infoBDate_line = self.label_30
+        self.__infoBPName_line = self.label_21
+        self.__infoBPEmail_line = self.label_23
+        self.__reportCount_line = self.label_34
+        self.__reportSize_line = self.label_39
+        self.__reportDCount_line = self.label_35
+        self.__reportDSize_line = self.label_37
+        self.__reportISOSize_line = self.label_42
+        #self.__stop_button = self.pushButton_xx        #Doesn't work, GUI freezing until python process end over
                                                         #Maybe we use python threading etc.
 
         #Get user dialogs and decriptions
@@ -86,17 +101,19 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
         QtCore.QObject.connect(self.__baltDir_edit,  QtCore.SIGNAL("textChanged (const QString&)"),  self.check_b_edit)
         QtCore.QObject.connect(self.__baltDir_check,  QtCore.SIGNAL("stateChanged (int)"),  self.set_baltEdit)
         QtCore.QObject.connect(self.__baltDir_check,  QtCore.SIGNAL("stateChanged (int)"),  self.check_b_edit)
+        QtCore.QObject.connect(self.__infoBHome_line, QtCore.SIGNAL("linkActivated(QString)"), self.OpenURL)
+
 
         #Register the Progress Bar actions to interface eventHandlers for operation processes
-        pIface.onCrazy.addEventListener( self.__updateProgress)
-        pIface.onError.addEventListener( self.__errorHappened)
-        bIface.onAction.addEventListener( self.__updateProgress)
-        bIface.onError.addEventListener( self.__errorHappened)
+        self.pIface.onCrazy.addEventListener( self.__updateProgress)
+        self.pIface.onError.addEventListener( self.__errorHappened)
+        self.bIface.onAction.addEventListener( self.__updateProgress)
+        self.bIface.onError.addEventListener( self.__errorHappened)
 
 
         #Default variables                                      #It should be takes from config file, but config file not supported yet
-        self.__rootDir_edit.setText(pIface.getroot(self))
-        self.__boutDir_edit.setText(bIface.getcwd(self))
+        self.__rootDir_edit.setText(self.pIface.getroot())
+        self.__boutDir_edit.setText(self.bIface.getcwd())
 
 
 
@@ -117,7 +134,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
 #
 ################################################################################
 
-    #ISO Directory Browse button _______________________________________________
+    #ISO Directory Browse button
     @QtCore.pyqtSignature("void")
     def on_pushButton_4_clicked(self):
         #
@@ -141,7 +158,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
 
 
 
-    #Alternative Package Directory Browse button _______________________________________________
+    #Alternative Package Directory Browse button
     @QtCore.pyqtSignature("void")
     def on_pushButton_clicked(self):
         #
@@ -158,11 +175,13 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
         #
         if state == 2 and str(self.__altDir_edit.text()):
             self.__altDir_edit.setEnabled(True)
+        else:
+            self.__altDir_edit.setEnabled(False)
+            self.__altDir_check.setCheckState(0)
 
 
 
-
-    #ROOT Directory Browse button _______________________________________________
+    #ROOT Directory Browse button
     @QtCore.pyqtSignature("void")
     def on_pushButton_10_clicked(self):
         #
@@ -173,7 +192,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
 
 
 
-    #OUTPUT File Browse button _______________________________________________
+    #OUTPUT File Browse button
     @QtCore.pyqtSignature("void")
     def on_pushButton_9_clicked(self):
         #
@@ -182,12 +201,13 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
             if stripFilename(str(fileName), ".paso") == stripFilename(str(fileName)):
                 fileName += ".paso"
             self.__outFile_edit.setText(fileName)
+            self.__updatePrepareInfo(self.pIface.getInfo( str(fileName)))
 
 
 
 
 
-    #Directory inputs control _______________________________________________
+    #Directory inputs control
     def check_edit(self, txt):
         rootDir = str(self.__rootDir_edit.text())
         outFile = str(self.__outFile_edit.text())
@@ -202,7 +222,20 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
 
 
 
-    #GO TO CRAZY button _______________________________________________
+
+
+    def __updatePrepareInfo(self, info):
+        #info is type of pasoMetadata
+        if info:
+            self.__infoPName_edit.setText(info.name)
+            self.__infoPSumm_edit.setText(info.summary)
+            self.__infoPDesc_edit.setText(info.description)
+            self.__infoPHome_edit.setText(info.homepage)
+
+
+
+
+    #PREPARE button
     @QtCore.pyqtSignature("void")
     def on_pushButton_2_clicked(self):
         #
@@ -210,19 +243,26 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
         self.__go_button.setEnabled(False)
 
         #pass values to pIface
-        pIface.setOptions(self, const.OPT_ISODIRCHECK_ID, bool(self.__isoDir_check.checkState()) )
-        pIface.setOptions(self, const.OPT_ALTDIRCHECK_ID, bool(self.__altDir_check.checkState()) )
-        pIface.setOptions(self, const.OPT_READINSCHECK_ID, bool(self.__readIns_check.checkState()) )
-        pIface.setOptions(self, const.OPT_READREPOCHECK_ID, bool(self.__readRepo_check.checkState()) )
-        pIface.setOptions(self, const.OPT_ROOTDIR_ID, str(self.__rootDir_edit.text()) )
-        pIface.setOptions(self, const.OPT_PASOFILE_ID, str(self.__outFile_edit.text()) )
-        pIface.setOptions(self, const.OPT_ISODIR_ID, str(self.__isoDir_edit.text()) )
-        pIface.setOptions(self, const.OPT_ALTDIR_ID, str(self.__altDir_edit.text()) )
-        pIface.got_to_crazy(self)
+        self.pIface.pasoMetadata.name = self.__infoPName_edit.text()
+        self.pIface.pasoMetadata.summary = self.__infoPSumm_edit.text()
+        self.pIface.pasoMetadata.description = self.__infoPDesc_edit.toPlainText()
+        self.pIface.pasoMetadata.homepage = self.__infoPHome_edit.text()
+        self.pIface.pasoMetadata.date = datetime.datetime.now().strftime("%d/%m/%Y")
+        self.pIface.pasoMetadata.release = getPardusRelease(self.__rootDir_edit.text())
+        self.pIface.isoDirCheck = bool(self.__isoDir_check.checkState())
+        self.pIface.altDirCheck = bool(self.__altDir_check.checkState())
+        self.pIface.readInsCheck = bool(self.__readIns_check.checkState())
+        self.pIface.readRepoCheck = bool(self.__readRepo_check.checkState())
+        self.pIface.rootDir = str(self.__rootDir_edit.text())
+        self.pIface.pasoFile = str(self.__outFile_edit.text())
+        self.pIface.isoDir = str(self.__isoDir_edit.text())
+        self.pIface.altDir = str(self.__altDir_edit.text())
+
+        self.pIface.go_to_crazy()
         if not self.__error:
             self.__updateProgress(100, 100, 100, 100, const.JOB_PAS_ID, \
                                     self.__jobDesc[const.JOB_SUCCES_ID]+" "+self.__outFile_edit.text() )
-            self.__go_button.setEnabled(True)
+        self.__go_button.setEnabled(True)
 
 
 
@@ -241,7 +281,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
 ################################################################################
 
 
-    #Paso file browse button _______________________________________________
+    #Paso file browse button
     @QtCore.pyqtSignature("void")
     def on_pushButton_15_clicked(self):
         #
@@ -251,13 +291,14 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
             self.__paoDir_edit.setText(fileName)
         if fileName <> old:
             self.__build_button.setEnabled(False)
-            bIface.setOptions(self, const.OPT_FORCEPASOREAD_ID, True )
+            self.bIface.forcePasoRead =  True
+            self.__updateBuildInfo(self.bIface.getInfo( str(fileName)))
 
 
 
 
 
-    #Output directory browse button _______________________________________________
+    #Output directory browse button
     @QtCore.pyqtSignature("void")
     def on_pushButton_11_clicked(self):
         #
@@ -268,7 +309,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
 
 
 
-    #ISO directory browse button _______________________________________________
+    #ISO directory browse button
     @QtCore.pyqtSignature("void")
     def on_pushButton_13_clicked(self):
         #
@@ -278,12 +319,12 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
             self.__bisoDir_edit.setText(dirName)
         if dirName <> old:
             self.__build_button.setEnabled(False)
-            bIface.setOptions(self, const.OPT_FORCECDREAD_ID, True )
+            self.bIface.forceCdRead =  True
 
 
 
 
-    #Alternative directory browse button _______________________________________________
+    #Alternative directory browse button
     @QtCore.pyqtSignature("void")
     def on_pushButton_12_clicked(self):
         #
@@ -295,7 +336,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
             self.__baltDir_check.setCheckState(2)
         if dirName <> old:
             self.__build_button.setEnabled(False)
-            bIface.setOptions(self, const.OPT_FORCEALTREAD_ID, True )
+            self.bIface.forceAltRead = True
 
 
 
@@ -311,7 +352,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
 
 
 
-    #Directory inputs control _______________________________________________
+    #Directory inputs control
     def check_b_edit(self, txt):
         #
         paoFile = str( self.__paoDir_edit.text()).strip()
@@ -326,40 +367,67 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
 
 
 
+    def __updateBuildInfo(self, info):
+        #info is type of pasoMetadata
+        if info:
+            self.__infoBName_label.setText(info.name)
+            self.__infoBSumm_line.setText(info.summary)
+            self.__infoBDesc_text.setText(info.description)
+            self.__infoBHome_line.setText("<qt><a href='"+info.homepage+ \
+                                            "'>"+info.homepage+"</a></qt>")
+            self.__infoBRele_line.setText(info.release)
+            self.__infoBDate_line.setText(info.date)
+            self.__infoBPName_line.setText(info.packagerName)
+            self.__infoBPEmail_line.setText(info.packagerEmail)
 
 
-    #Analyze button _______________________________________________
+
+
+    def OpenURL(self, URL):
+        QtGui.QDesktopServices().openUrl(QtCore.QUrl(URL))
+
+
+
+
+
+    #Analyze button
     @QtCore.pyqtSignature("void")
     def on_pushButton_18_clicked(self):
         #
         self.__error = False
 
-        bIface.setOptions(self, const.OPT_PASOFILE_ID, str(self.__paoDir_edit.text()) )
-        bIface.setOptions(self, const.OPT_ISODIR_ID, str(self.__bisoDir_edit.text()) )
-        bIface.setOptions(self, const.OPT_ALTDIR_ID, str(self.__baltDir_edit.text()) )
-        bIface.setOptions(self, const.OPT_READPASOCHECK_ID, bool(self.__readPao_check.checkState()) )
-        bIface.setOptions(self, const.OPT_READALTCHECK_ID, bool(self.__readAlt_check.checkState()) )
-        bIface.setOptions(self, const.OPT_ALTDIRCHECK_ID, bool(self.__baltDir_check.checkState()))
-        bIface.doAnalyze(self)
-        bIface.setOptions(self, const.OPT_FORCEPASOREAD_ID, False )
-        bIface.setOptions(self, const.OPT_FORCECDREAD_ID, False )
-        bIface.setOptions(self, const.OPT_FORCEALTREAD_ID, False )
+        self.bIface.pasoFile = str(self.__paoDir_edit.text())
+        self.bIface.isoDir = str(self.__bisoDir_edit.text())
+        self.bIface.altDir = str(self.__baltDir_edit.text())
+        self.bIface.readPasoCheck = bool(self.__readPao_check.checkState())
+        self.bIface.readAltCheck = bool(self.__readAlt_check.checkState())
+        self.bIface.altDirCheck = bool(self.__baltDir_check.checkState())
+        self.bIface.doAnalyze()
+        self.bIface.forcePasoRead = False
+        self.bIface.forceCdRead = False
+        self.bIface.forceAltRead = False
         self.check_b_edit("")
         if not self.__error:
             self.__build_button.setEnabled(True)
             self.__updateProgress(100, 100, 100, 100, const.JOB_ALZ_ID,self.__jobDesc[const.JOB_SUCCES_ID])
+            report = self.bIface.getReport()
+            self.__reportCount_line.setText( str(report[0]) )
+            self.__reportSize_line.setText( str(report[1] / 1024) )
+            self.__reportDCount_line.setText( str(report[2]) )
+            self.__reportDSize_line.setText( str(report[3] / 1024) )
+            self.__reportISOSize_line.setText( str(report[4] / 1024) )
 
 
 
 
 
-    #Build button _______________________________________________
+    #Build button
     @QtCore.pyqtSignature("void")
     def on_pushButton_17_clicked(self):
         #
         self.__error = False
-        bIface.setOptions(self, const.OPT_OUTDIR_ID, str(self.__boutDir_edit.text()) )
-        bIface.build(self)
+        self.bIface.outDir =  str(self.__boutDir_edit.text())
+        self.bIface.build()
         if not self.__error:
             self.__updateProgress(100, 100, 100, 100, const.JOB_BIS_ID, \
                                     self.__jobDesc[const.JOB_SUCCES_ID]+" "+ \
@@ -415,11 +483,11 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
 ################################################################################
 
 
-    #About button _______________________________________________
+    #About button
     @QtCore.pyqtSignature("void")
     def on_pushButton_7_clicked(self):
         #
-        self.__aboutDialog.show()
+        self.__aboutDialog.exec_()
 
 
 
@@ -439,6 +507,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
 
     def i18n(self):
         #
+        self.setWindowTitle(const.NAME+" "+const.VERSION)
         self.__dialog1 =  _("Select directory")
         self.__dialog2 =  _("Select file")
         self.__jobDesc[const.JOB_INS_ID] =  _("Reading installed packages")
@@ -460,7 +529,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
         self.tabWidget.setTabText(0,  _("Build") )
         self.tabWidget.setTabText(1,  _("Prepare") )
         self.label_11.setText(  _(".paso File") )
-        self.label_19.setText(  _("Pardus CD mount directory") )
+        self.label_19.setText(  _("Mounted Pardus CD directory") )
         self.label_18.setText(  _("Alternative packages directory") )
         self.label_10.setText(  _("Output directory") )
         self.groupBox_4.setTitle(  _("Progress") )
@@ -476,14 +545,47 @@ class mainDialog(QtGui.QDialog, Ui_Dialog, pIface, bIface):
         self.pushButton_2.setText(  _("Prepare") )
         self.__readPao_check.setText(  _("Don't read paso info again") )
         self.__readAlt_check.setText(  _("Don't read alternative packages again") )
+        self.groupBox_3.setTitle( _("Info") )
+        self.groupBox_5.setTitle( self.groupBox_3.title() )
+        self.groupBox_2.setTitle( _("Analyze report") )
+        self.label_2.setText( _("Name") )
+        self.label_4.setText( _("Summary") )
+        self.label_22.setText( _("Description"))
+        self.label_12.setText( _("Homepage"))
+        self.label_25.setText( self.label_12.text()+":" )
+        self.label_27.setText( _("Release")+":" )
+        self.label_29.setText( _("Date")+":" )
+        self.label_20.setText( _("Prepared by")+":" )
+        self.label_32.setText( _("Total")+":" )
+        self.label_36.setText( _("Download")+":" )
+        self.label_41.setText( _("Estimated ISO size")+":" )
 
+        #About Dialog
+        description = _("<p>Paso is an installation builder for Pardus Linux.\
+                        For moore information and new versions visit to;<br>")
+        developers = _("<p>Developer;<br>")
+        translators = _("<p>Translators;<br>")
+        copying =  _("<p>This program is free software; \
+                    you can redistribute it and/or modify it \
+                    under the terms of the GNU General Public \
+                    License as published by the Free Software Foundation.\
+                    Please read COPYING file</p>")
+        abouttext = description+"<a href="+const.WEBPAGE+">"+const.WEBPAGE+"</a></p>"
+        abouttext += copying
+        abouttext += developers + const.DEVELOPERS + "</p>"
+        abouttext += translators + const.TRANSLATORS + "</p>"
+        self.__aboutDialog.textBrowser.setText(abouttext)
+        self.__aboutDialog.label.setText( const.NAME )
+        self.__aboutDialog.label_2.setText( const.VERSION )
+
+        #Error messages
         self.__errDesc[const.ERR_01_ID] = _("Directory or file not found")
         self.__errDesc[const.ERR_02_ID] = _("Bad xml structure")
         self.__errDesc[const.ERR_03_ID] = _("User break")
         self.__errDesc[const.ERR_04_ID] = _("Package not found")
         self.__errDesc[const.ERR_05_ID] = _("File not created")
         self.__errDesc[const.ERR_06_ID] = _("Bad paso info")
-        self.__errDesc[const.ERR_07_ID] = _("")
+        self.__errDesc[const.ERR_07_ID] = _("Paso file corrupted")
         self.__errDesc[const.ERR_08_ID] = _("HTTP Error")
         self.__errDesc[const.ERR_09_ID] = _("ISO image not craeted")
 

@@ -10,7 +10,8 @@ from constants import const
 from lib import eventHandler
 import os
 import tarfile
-import time
+from pasodata import pasoMetadata
+from pasodata import pasoFiles
 
 
 
@@ -28,14 +29,20 @@ class pasoFile(object):
 
 
     def __init__(self):
+        #
+        self.__metadata = pasoMetadata()
+        self.__files = pasoFiles()
         self.__clear()
         self.onAddPackage = eventHandler()      #(elementName, totalElements, currentElement)
         self.onError = eventHandler()           #( errorCode, errorData)
+        self.__files.onAdd.addEventListener(self.__onPasoFilesRead)
 
 
 
 
     def __clear(self):
+        self.__file = ""
+
         self.__path = ""
         self.__targetName = ""
         self.__sourceName = ""
@@ -49,160 +56,168 @@ class pasoFile(object):
 
 
 
-
-    def create(self, outFile, listFull, altList, altDir):
-        #
-        self.__clear()
-        jobList = {}    #{"packageName": "Full Uri"}
-        if outFile:
-            self.__path = outFile.strip(lib.stripFilename(outFile))
-            self.__targetName = outFile
-        else:
-            return()
-        print self.__path, self.__targetName
-        listFile = self.__path+const.PASO_DATAFILE_VAL
-        #Convert dict to paso format
-        self.__listRawData = self.__buildData(listFull)
-        self.onAddPackage.raiseEvent(listFile, 1, 0)
-        #Save
-        if lib.savefile(listFile, self.__listRawData) > 0:
-            self.onError.raiseEvent( const.ERR_05_ID, listFile)
-            return(False)
-        self.onAddPackage.raiseEvent(self.__targetName, 1, 0)
-        #Create paso file (tar.gz file)
-        try:
-            target = tarfile.open(self.__targetName, 'w:gz')
-        except:
-            self.onError.raiseEvent( const.ERR_05_ID, self.__targetName)
-            return(False)
-        #Add packages.txt to list
-        jobList[const.PASO_DATAFILE_VAL] = listFile
-        #Add pisi files to list
-        for package in altList:
-            jobList[package] = altDir+"/"+package
-        #Add files to paso file
-        if not self.__addPackages(target, jobList):
-            return(False)
-
-
-
-
-
-
-    def __addPackages(self, target, packageList):
-        #
-        totalJob = len(packageList)
-        jobPos = 1
-        for package in packageList.keys():
-            self.onAddPackage.raiseEvent(packageList[package], totalJob, jobPos)
+    def open(self, filename):
+        #source=paso file (tar.gz)
+        if os.path.isfile(filename):
             try:
-                target.add(packageList[package], package, False)
+                self.onAddPackage.raiseEvent( filename, 4, 1)
+                handle = tarfile.open(filename)
             except:
-                self.onError.raiseEvent( const.ERR_05_ID, packageList[package])
+                self.onError.raiseEvent( const.ERR_07_ID, filename)
+                return( False )
+            try:
+                self.onAddPackage.raiseEvent( filename, 4, 2)
+                metadata = handle.extractfile(const.PASO_METAFILE_VAL)
+                self.onAddPackage.raiseEvent( filename, 4, 3)
+                xml = metadata.read()
+            except:
+                self.onError.raiseEvent( const.ERR_06_ID, filename)
+                return( False )
+            if not self.__metadata.parse(xml):
+                self.onError.raiseEvent( const.ERR_02_ID, filename+":"+const.PASO_METAFILE_VAL)
+                return( False )
+            self.onAddPackage.raiseEvent( filename, 4, 4)
+            self.__file = filename
+            handle.close()
+            return(True)
+        else:
+            self.onError.raiseEvent( const.ERR_01_ID, filename)
+            return(False)
+
+
+
+
+
+
+    def create(self, outFile, listFull, altList, altDir, repoList, metadata):
+        #
+        self.__file = outFile
+        self.__metadata = metadata
+        pasoFileList = {}       #{"filename": uri}
+        path = outFile.strip(lib.stripFilename(self.__file))
+        metadataFile = path+const.PASO_METAFILE_VAL
+        filesdataFile = path+const.PASO_DATAFILE_VAL
+        #Build files.xml
+        self.__files.clear()
+        self.__files.repos = repoList
+        for package in listFull.keys():
+            self.__files.addPackage( package, listFull[package], 0)     #FIX IT
+        for file in altList:
+            self.__files.addFile(file)
+        #Save temp files
+        if lib.savefile(metadataFile, self.__metadata.toXml()) > 0:
+            self.onError.raiseEvent( const.ERR_05_ID, metadataFile)
+            return(False)
+        if lib.savefile(filesdataFile, self.__files.toXml()) > 0:
+            self.onError.raiseEvent( const.ERR_05_ID, filesdataFile)
+            return(False)
+        #Create file list for paso archive
+        pasoFileList[const.PASO_METAFILE_VAL] = metadataFile
+        pasoFileList[const.PASO_DATAFILE_VAL] = filesdataFile
+        for aFile in altList:
+            pasoFileList[aFile] = altDir+"/"+aFile
+        #Create paso file
+        if not self.__createPaso(pasoFileList):
+            return(False)
+        return(True)
+
+
+
+
+
+
+    def __createPaso(self, fileList):
+        #
+        try:
+            target = tarfile.open(self.__file, 'w:gz')
+        except:
+            self.onError.raiseEvent( const.ERR_05_ID, self.__file)
+            return(False)
+        totalJob = len(fileList)
+        jobPos = 1
+        for aFile in fileList.keys():
+            self.onAddPackage.raiseEvent(fileList[aFile], totalJob, jobPos)
+            try:
+                target.add(fileList[aFile], aFile, False)
+            except:
+                target.close()
+                os.unlink(fileList[const.PASO_METAFILE_VAL])
+                os.unlink(fileList[const.PASO_DATAFILE_VAL])
+                self.onError.raiseEvent( const.ERR_01_ID, fileList[aFile])
                 return(False)
             jobPos += 1
         target.close()
-        os.unlink(packageList[const.PASO_DATAFILE_VAL])
-
-
-
-
-
-
-    def __buildData(self, listFull):
-        #
-        result = ""
-        for package in listFull.keys():
-            result += package+"="+listFull[package]+"\n"
-        return(result)
-
-
-    def getTargetName(self):
-        return( self.__targetName)
-
-
-
-    def getSourceName(self):
-        return( self.__sourceName)
-
-
-
-
-    def loadInfo(self, source):
-        #source=paso file (tar.gz)
-        self.__clear()
-        self.__sourceName = source
-        self.onAddPackage.raiseEvent(self.__targetName, 100, 1)
-        #Open and load file list
-        try:
-            source = tarfile.open(self.__sourceName)
-            self.__getRepoList(source)
-        except:
-            self.onError.raiseEvent( const.ERR_01_ID, self.__sourceName)
-            return(False)
-        self.onAddPackage.raiseEvent("paso info", 100, 1)
-        #Extract packages.txt
-        try:
-            packagesTar = source.extractfile(const.PASO_DATAFILE_VAL)
-        except:
-            self.onError.raiseEvent(const.ERR_05_ID, const.PASO_DATAFILE_VAL)
-            return(False)
-        #Parse txt to __listFull dict
-        if not self.__parseInfo(packagesTar):
-            return(False)
-        try:    tarfile.close()
-        except: pass
+        os.unlink(fileList[const.PASO_METAFILE_VAL])
+        os.unlink(fileList[const.PASO_DATAFILE_VAL])
         return(True)
 
 
 
 
-    def __getRepoList(self, source):
-        #
-        for tarinfo in source:
-            if tarinfo.name != const.PASO_DATAFILE_VAL:
-                self.onAddPackage.raiseEvent(tarinfo.name, 100, 1)
-                self.__pasoRepo.append(tarinfo.name)
-
-
-
-
-    def __parseInfo(self, packagesTar):
-        #
-        pos = 1
-        try:
-            lines = packagesTar.readlines()
-        except:
-            self.onError.raiseEvent( const.ERR_06_ID, const.PASO_DATAFILE_VAL)
+    def load(self):
+        if os.path.isfile(self.__file):
+            try:
+                handle = tarfile.open(self.__file)
+            except:
+                self.onError.raiseEvent( const.ERR_07_ID, self.__file)
+                return( False )
+            try:
+                files = handle.extractfile(const.PASO_DATAFILE_VAL)
+                xml = files.read()
+            except:
+                self.onError.raiseEvent( const.ERR_06_ID, self.__file)
+                return( False )
+            if not self.__files.parse(xml):
+                self.onError.raiseEvent( const.ERR_02_ID, self.__file+":"+const.PASO_DATAFILE_VAL)
+                return( False )
+            handle.close()
+            return(True)
+        else:
+            self.onError.raiseEvent( const.ERR_01_ID, filename)
             return(False)
-        for line in lines:
-            p = line.split("=")
-            self.__listFull[ p[0] ] = p[1].strip()
-            self.onAddPackage.raiseEvent(p[0], len(lines), pos)
-            pos += 1
-        return(True)
 
 
 
 
-    def getFullList(self):
-        return(self.__listFull.keys())
+    def __onPasoFilesRead(self, name, total, current):
+        self.onAddPackage.raiseEvent(name, total, current)
 
 
 
+    def getFileName(self):
+        return(self.__file)
 
-    def getURL(self, key):
-        return(self.__listFull[key])
+
+
+    def getInfo(self):
+        return(self.__metadata)
+
+
+
+    def isPackagesEmpty(self):
+        if len(self.__files.packages) > 0:      return(False)
+        else:                                   return(True)
+
+
+    def getPackageList(self):
+        return(self.__files.packages.keys())
 
 
 
     def isOn(self, package):
-        if package in self.__pasoRepo:   return( True)
+        if package in self.__files.additionals:   return( True)
         else:   return( False)
 
 
-    def isInfoEmpty(self):
-        if len(self.__listFull) > 0:    return(False)
-        else:                           return(True)
+    def getPasoFileName(self):
+        return(self.__file)
 
+
+    def getPackageUrl(self, package):
+        return( self.__files.repos[ self.__files.packages[package]["repo"] ] )
+
+
+
+    def getSize(self, package):
+        return( self.__files.packages[package]["size"] )
 

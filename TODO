@@ -1,11 +1,12 @@
+- .conf File support
+- Options menu dialog
+Release 0.2 version
 - Add tooltips to gui elements for help
 - İnşa sürecinde belirtilen adreste bulunamayan paket
   diğer depolarda da aranmalı
-- packages.txt develeops as an XML file
-    - Package sizes
-    - Paso descriptions, author, date etc.
-- .conf File support
-- Options menu dialog
-- Release version 1.0
-- Down to repo parsing process time
+- Export the package list for pisi installation
+Release 0.3 version
+- Screenshot preview support
+- Allow to update .paso file info
+~
 - Gui freezing while process running, do something

@@ -14,7 +14,7 @@ def getfile(name):
     try:
     	f = open(name, "r")
     except:
-		print "Open Error :"+name
+		#print "Open Error :"+name
 		return (False)
     return( f.read() )
 
@@ -27,7 +27,7 @@ def savefile(name, data):
     try:
     	f = open(name, "w")
     except:
-		print "Open Error :"+name
+		#print "Open Error :"+name
 		return (False)
     return( f.write(data)  )
 
@@ -94,6 +94,42 @@ class eventHandler():
         for e in self.__actions: e(*args)
 
 
+
+
+
+
+def createXmlNode(name, value={}, attributes={}, close=False, indents=0, linefeed=True, empty=False):
+    #("Name", "text", {'attrName':'attrVal',})
+    space = " "
+    less = "<"
+    greater = ">"
+    dvide = "/"
+    apos = "\""
+    equal = "=\""
+    linefeed = "\n"
+    xml = ("    "*indents)
+    if type(value) != type(dict()):
+        value = str(value)
+        if value.strip() == "":     value = " "
+        xml += less+name+space
+        for attribute in attributes.keys():
+            xml += attribute+equal+attributes[attribute]+apos+space
+        xml += greater+value+less+dvide+name+greater
+    elif close:
+        xml += less+dvide+name+greater
+    elif close and empty:
+        xml += less+name+dvide+greater
+    else:
+        xml += less+name+greater
+    if linefeed:
+        xml += linefeed
+    return(xml)
+
+
+
+
+def getPardusRelease(root):
+    return( getfile(root+"etc/pardus-release").strip() )
 
 
 

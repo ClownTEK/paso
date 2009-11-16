@@ -38,6 +38,8 @@ class analyze(object):
     def __clear(self):
         self.__remotePackages = {}               #{"packagename":"URL"}
         self.__localPackages = {}                #{"packagename":"Path"}
+        self.__totalSize = 0
+        self.__downloadSize = 0
         self.__sourceName = ""
         self.__break = False
 
@@ -47,11 +49,12 @@ class analyze(object):
     def analyze(self, pasoObject, isoObject, altObject, chcObject):
         #
         self.__clear()
-        total = len( pasoObject.getFullList() )
-        for package in pasoObject.getFullList():
+        total = len( pasoObject.getPackageList() )
+        for package in pasoObject.getPackageList():
+            self.__totalSize += int(pasoObject.getSize(package))
             if pasoObject.isOn(package):
-                self.__localPackages[package] = pasoObject.getSourceName()
-                self.onAddPackage.raiseEvent(package+" => "+pasoObject.getSourceName(), total, len(self.__localPackages) + len(self.__remotePackages))
+                self.__localPackages[package] = pasoObject.getPasoFileName()
+                self.onAddPackage.raiseEvent(package+" => "+pasoObject.getPasoFileName(), total, len(self.__localPackages) + len(self.__remotePackages))
             elif isoObject.is_on(package):
                 self.__localPackages[package] = isoObject.get_path()
                 self.onAddPackage.raiseEvent(package+" => "+isoObject.get_path(), total, len(self.__localPackages) + len(self.__remotePackages))
@@ -61,12 +64,13 @@ class analyze(object):
             elif chcObject.is_on(package):
                 self.__localPackages[package] = chcObject.get_path()
                 self.onAddPackage.raiseEvent(package+" => "+chcObject.get_path(), total, len(self.__localPackages) + len(self.__remotePackages))
-            elif pasoObject.getURL(package) == "":
+            elif pasoObject.getPackageUrl(package) == "":
                 self.onError.raiseEvent( const.ERR_01_ID, package)
                 return(False)
             else:
-                self.__remotePackages[package] = pasoObject.getURL(package)
-                self.onAddPackage.raiseEvent(package+"=>"+pasoObject.getURL(package), total, len(self.__localPackages) + len(self.__remotePackages))
+                self.__downloadSize += int(pasoObject.getSize(package))
+                self.__remotePackages[package] = pasoObject.getPackageUrl(package)
+                self.onAddPackage.raiseEvent(package+"=>"+pasoObject.getPackageUrl(package), total, len(self.__localPackages) + len(self.__remotePackages))
         return(True)
 
 
@@ -78,19 +82,52 @@ class analyze(object):
 
 
 
+
     def getCountOfLocals(self):
         return(len(self.__localPackages))
+
+
+
+
+    def getCountOfPackages(self):
+        return( self.getCountOfLocals() + self.getCountOfRemotes() )
+
+
+
+
+    def getSizeOfRemotes(self):
+        return(self.__downloadSize)
+
+
+
+
+    def getSizeOfTotal(self):
+        return(self.__totalSize)
+
+
+
+    def getSizeOfISO(self):
+        return( self.getSizeOfTotal() + int(const.ISOBOOTSIZE))
+
 
 
     def getLocalPackages(self):
         return( self.__localPackages.keys() )
 
 
+
+
     def getRemotePackages(self):
         return( self.__remotePackages.keys())
 
+
+
+
     def getLocalPath(self, package):
         return( self.__localPackages[package] )
+
+
+
 
     def getRemoteURL(self, package):
         return( self.__remotePackages[package] )

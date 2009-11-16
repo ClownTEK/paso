@@ -19,7 +19,7 @@ const = _const()
 #Include const and use global values below
 
 const.NAME = "Paso"
-const.VERSION = "Testing"
+const.VERSION = "0.1"
 const.WEBPAGE = "http://github.com/alierkanimrek/paso"
 const.DEVELOPERS = "Ali Erkan İMREK  alierkanimrek[at]gmail.com <br> \
                     "
@@ -43,20 +43,6 @@ const.JOB_BRP_ID = 10
 const.JOB_BIS_ID = 11
 const.JOB_SUCCES_ID = 12
 
-const.OPT_ISODIRCHECK_ID = 1
-const.OPT_ALTDIRCHECK_ID = 2
-const.OPT_READINSCHECK_ID = 3
-const.OPT_READREPOCHECK_ID = 4
-const.OPT_ROOTDIR_ID = 5
-const.OPT_ISODIR_ID = 6
-const.OPT_ALTDIR_ID = 7
-const.OPT_PASOFILE_ID = 8
-const.OPT_OUTDIR_ID = 9
-const.OPT_READPASOCHECK_ID = 10
-const.OPT_READALTCHECK_ID = 11
-const.OPT_FORCEPASOREAD_ID= 12
-const.OPT_FORCECDREAD_ID = 13
-const.OPT_FORCEALTREAD_ID = 14
 
 const.OPT_CACHEPATH_VAL = "/var/cache/pisi/packages"
 const.OPT_PACKPATH_VAL = "/var/lib/pisi/package"
@@ -64,11 +50,13 @@ const.OPT_INFOPATH_VAL = "/var/lib/pisi/info"
 const.OPT_INDEXPATH_VAL = "/var/lib/pisi/index"
 const.OPT_CDREPOPATH_VAL = "/repo"
 
-const.PASO_DATAFILE_VAL = "packages.txt"
+const.PASO_METAFILE_VAL = "metadata.xml"
+const.PASO_DATAFILE_VAL = "files.xml"
 const.PACKAGE_INFO_FILE = "metadata.xml"
 const.PASO_EXT = ".paso"
 const.ISO_EXT = ".iso"
 const.PISI_EXT = ".pisi"
+const.ISOBOOTSIZE = "0"         #"130000000"
 
 const.ERR_01_ID = 1
 const.ERR_02_ID = 2

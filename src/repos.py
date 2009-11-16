@@ -6,7 +6,7 @@
 #
 
 
-from xml.dom.minidom import parseString
+import xml.etree.cElementTree as etree
 import lib
 from constants import const
 from lib import eventHandler
@@ -62,20 +62,9 @@ class repos(object):
         xml = lib.getfile(self.__repoPath+"/repos")
         if xml != False:
             try:
-                repo = {}
-                doc = parseString(xml)
-                if not doc:
-                    self.onError.raiseEvent( const.ERR_02_ID, self.__repoPath+"/repos")
-                    return( False)
-                domREPOS = doc.getElementsByTagName("REPOS")[0]              #REPOS
-                repos = domREPOS.getElementsByTagName("Repo")
-                for domRepo in repos:
-                    domName = domRepo.getElementsByTagName("Name")[0]
-                    repo["name"] = domName.childNodes[0].nodeValue
-                    domUrl = domRepo.getElementsByTagName("Url")[0]
-                    repo["url"] = domUrl.childNodes[0].nodeValue[0:-18]
-                    self.__repos[repo["name"]] = repo["url"]
-                    self.onAddPackage.raiseEvent("Found "+repo["name"], 100, 1)
+                for reposTree in etree.fromstring(xml).getchildren():
+                    self.__repos[ reposTree.find("Name").text ] = reposTree.find("Url").text[0:-18]
+                    self.onAddPackage.raiseEvent("Found "+reposTree.find("Name").text, 100, 1)
             except:
                 self.onError.raiseEvent( const.ERR_02_ID, self.__repoPath+"/repos")
                 return(False)
@@ -83,7 +72,6 @@ class repos(object):
             self.onError.raiseEvent( const.ERR_01_ID, self.__repoPath+"repos")
             return (False)
         return( True)
-
 
 
 
@@ -109,22 +97,17 @@ class repos(object):
         #
         currentPos = 1
         currentElement = 0
+        repoCount = len(self.__repos)
         try:
-            self.onAddPackage.raiseEvent(repo+" parsing...", len(self.__repos), self.__currentRepo-1)
-            doc = parseString(xml)
-            if not doc:
-                self.onError.raiseEvent( const.ERR_02_ID, repo)
-                return( False)
-            domPISI = doc.getElementsByTagName("PISI")[0]
-            packages = domPISI.getElementsByTagName("Package")
-            for domPackage in packages:
-                if len(domPackage.childNodes) > 1:
-                    domName = domPackage.getElementsByTagName("Name")[0]
-                    self.__packages[domName.childNodes[0].nodeValue] = repo
-                    currentElement = lib.ratioCalc(len(packages), currentPos, len(self.__repos), self.__currentRepo)
-                    self.onAddPackage.raiseEvent(repo+":"+domName.childNodes[0].nodeValue, 100, currentElement)
-                    #if len(self.__packages) > 10: break             #REMOVE!!!
-                currentPos += 1
+            doc = etree.fromstring(xml)
+            packageCount = len(doc.findall("Package") )
+            for package in doc.getchildren():
+                if package.tag == "Package":
+                    name = package.find("Name").text
+                    self.__packages[name] = repo
+                    currentElement = lib.ratioCalc(packageCount, currentPos, repoCount, self.__currentRepo)
+                    self.onAddPackage.raiseEvent(repo+":"+name, 100, currentElement)
+                    currentPos += 1
         except:
             self.onError.raiseEvent( const.ERR_02_ID, repo)
             return( False)
@@ -152,6 +135,11 @@ class repos(object):
         except:
             result = False
         return(result)
+
+
+
+    def get_repos(self):
+        return(self.__repos)
 
 
 

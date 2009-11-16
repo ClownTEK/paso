@@ -5,7 +5,6 @@
 #License: Read COPYING file.
 
 
-#from xml.dom.minidom import parseString
 import lib
 from constants import const
 from lib import eventHandler

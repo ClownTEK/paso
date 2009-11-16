@@ -5,7 +5,8 @@
 #License: Read COPYING file.
 
 
-from xml.dom.minidom import parseString
+
+import xml.etree.cElementTree as etree
 import lib
 from constants import const
 from lib import eventHandler
@@ -16,7 +17,8 @@ from lib import eventHandler
 
 
 class installed(object):
-    #Search installed packages on the specify Pardus system and add the package name as key to
+    #Search installed packages on the specify Pardus system and
+    # add the package name as key to
     #__packages dict with its pisi filename
     #System may be found other mounted partition
 
@@ -43,7 +45,7 @@ class installed(object):
 
 
     def load(self, path):
-        #path is default on Pardus systems
+        #
         self.__clear()
         self.__path = path+"/"
         #Get list of packages, they're found as a directory each one
@@ -64,7 +66,6 @@ class installed(object):
                     return False
                 self.__packages[package["name"]] = package
                 self.onAddPackage.raiseEvent(package["name"], totalPackages, len(self.__packages))
-                #if len(self.__packages) > 10: break             #REMOVE!!!
             else:
                 self.onError.raiseEvent( const.ERR_01_ID, uri)
                 break
@@ -78,24 +79,18 @@ class installed(object):
         #
         package = {}
         try:
-            doc = parseString(xml)
-            domPISI = doc.getElementsByTagName("PISI")[0]               #PISI
-            domPackage = domPISI.getElementsByTagName("Package")[0]     #PISI/Package
-            domName = domPackage.getElementsByTagName("Name")[0]        #PISI/Package/Name
-            package["name"] = domName.childNodes[0].nodeValue
-            domHistory = domPackage.getElementsByTagName("History")[0]  #PISI/Package/History
-            domUpdate = domHistory.getElementsByTagName("Update")[0]    #PISI/Package/History/Update
-            package["release"] = domUpdate.attributes["release"].nodeValue
-            domVersion = domUpdate.getElementsByTagName("Version")[0]   #PISI/Package/History/Update/Version
-            package["version"] = domVersion.childNodes[0].nodeValue
-            try:                                                        #
-                domBuild = domPackage.getElementsByTagName("Build")[0]      #PISI/Package/Bulid
-                package["build"] = domBuild.childNodes[0].nodeValue         #It may be not found
+            packageTree = etree.fromstring(xml).getchildren()[1]
+            package["name"] = packageTree.find("Name").text
+            package["release"] = packageTree.find("History").find("Update").attrib["release"]
+            package["version"] = packageTree.find("History").find("Update").find("Version").text
+            try:
+                package["build"] = packageTree.find("Build").text
             except:
                 package["build"] = False
         except:
             return False
         return( package )
+
 
 
 

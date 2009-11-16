@@ -4,7 +4,7 @@
 #Author: Read AUTHORS file.
 #License: Read COPYING file.
 
-#from xml.dom.minidom import parseString
+
 import lib
 from constants import const
 from lib import eventHandler
@@ -52,7 +52,9 @@ class repoBuilder(object):
         for package in alz.getLocalPackages():
             currentPackage += 1
             packageUri = alz.getLocalPath(package)+"/"+package
-            if alz.getLocalPath(package) == source:     #In paso file
+            if os.path.isfile(self.__target+"/"+lib.stripFilename(packageUri)):
+                self.onAddPackage.raiseEvent(package+" in "+self.__target, totalPackage, currentPackage)
+            elif alz.getLocalPath(package) == source:     #In paso file
                 self.onAddPackage.raiseEvent(package+" in "+lib.stripFilename(source), totalPackage, currentPackage)
                 if not self.__extractPaso(source, package):
                     return(False)
@@ -66,10 +68,13 @@ class repoBuilder(object):
         #Download remote packages
         for package in alz.getRemotePackages():
             currentPackage += 1
-            packageUrl = alz.getRemoteURL(package)+package
-            self.onAddPackage.raiseEvent(packageUrl, totalPackage, currentPackage)
-            if not self.__download(packageUrl):
-                return(False)
+            if os.path.isfile(self.__target+"/"+lib.stripFilename(package)):
+                self.onAddPackage.raiseEvent(package+" in "+self.__target, totalPackage, currentPackage)
+            else:
+                packageUrl = alz.getRemoteURL(package)+package
+                self.onAddPackage.raiseEvent(packageUrl, totalPackage, currentPackage)
+                if not self.__download(packageUrl):
+                    return(False)
         #Build repo index
         self.onAddPackage.raiseEvent("pisi-index.xml", totalPackage, totalPackage)
         self.__buildIndex()
@@ -107,7 +112,7 @@ class repoBuilder(object):
     def __cpFile(self, source):
         #
         if not os.path.isfile(self.__target+"/"+lib.stripFilename(source)):
-            cmd = "/bin/cp "+source+" "+self.__target
+            cmd = "/bin/cp '"+source+"' '"+self.__target+"'"
             if os.system(cmd) > 0:
                 self.onError.raiseEvent( const.ERR_05_ID, cmd)
                 return(False)
@@ -145,7 +150,7 @@ class repoBuilder(object):
     def __download(self, url):
         #
         targetFile = self.__target+"/"+lib.stripFilename(url)
-        if not os.path.isfile(self.__target+"/"+lib.stripFilename(url) ):
+        if not os.path.isfile("'"+self.__target+"/"+lib.stripFilename(url)+"'" ):
             try:
                 remote = urllib2.urlopen(url)
             except:
@@ -158,7 +163,7 @@ class repoBuilder(object):
             except:
                 self.onError.raiseEvent( const.ERR_08_ID, url)
                 return(False)
-            cmd = "mv "+targetFile+".part "+targetFile
+            cmd = "mv '"+targetFile+".part' '"+targetFile+"'"
             if os.system(cmd) > 0:
                 self.onError.raiseEvent( const.ERR_05_ID, targetFile)
                 return(False)
