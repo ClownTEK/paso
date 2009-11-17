@@ -543,7 +543,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.checkBox_2.setText(  _("Don't read installed packages again") )
         self.checkBox.setText(  _("Don't read repo index again") )
         self.pushButton_2.setText(  _("Prepare") )
-        self.__readPao_check.setText(  _("Don't read paso info again") )
+        self.__readPao_check.setText(  _("Don't read paso packages again") )
         self.__readAlt_check.setText(  _("Don't read alternative packages again") )
         self.groupBox_3.setTitle( _("Info") )
         self.groupBox_5.setTitle( self.groupBox_3.title() )
