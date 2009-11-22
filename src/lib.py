@@ -26,10 +26,11 @@ def savefile(name, data):
     #
     try:
     	f = open(name, "w")
+        f.write(data)
     except:
 		#print "Open Error :"+name
 		return (False)
-    return( f.write(data)  )
+    return( True )
 
 
 
@@ -131,5 +132,10 @@ def createXmlNode(name, value={}, attributes={}, close=False, indents=0, linefee
 def getPardusRelease(root):
     return( getfile(root+"etc/pardus-release").strip() )
 
+
+
+
+def stripPath(uri):
+    return( uri[0:uri.find(stripFilename(uri))-1] )
 
 

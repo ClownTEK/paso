@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'qt4/main.ui'
+# Form implementation generated from reading ui file '../qt4/main.ui'
 #
-# Created: Mon Nov 16 22:36:37 2009
+# Created: Fri Nov 20 22:37:14 2009
 #      by: PyQt4 UI code generator 4.5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -360,15 +360,9 @@ class Ui_Dialog(object):
         self.checkBox_6.setText(QtGui.QApplication.translate("Dialog", "Don\'t read alternative packages again", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_5.setTitle(QtGui.QApplication.translate("Dialog", "Info", None, QtGui.QApplication.UnicodeUTF8))
         self.label_20.setText(QtGui.QApplication.translate("Dialog", "Prepare by :", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_21.setText(QtGui.QApplication.translate("Dialog", "Ali Erkan İMREK", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_23.setText(QtGui.QApplication.translate("Dialog", "alierkanimrek gmail.com", None, QtGui.QApplication.UnicodeUTF8))
         self.label_25.setText(QtGui.QApplication.translate("Dialog", "Homepage :", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_26.setText(QtGui.QApplication.translate("Dialog", "http://", None, QtGui.QApplication.UnicodeUTF8))
         self.label_27.setText(QtGui.QApplication.translate("Dialog", "Release :", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_28.setText(QtGui.QApplication.translate("Dialog", "Pardus 2009", None, QtGui.QApplication.UnicodeUTF8))
         self.label_29.setText(QtGui.QApplication.translate("Dialog", "Date :", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_30.setText(QtGui.QApplication.translate("Dialog", "10.10.2010", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_33.setText(QtGui.QApplication.translate("Dialog", "Pardus 2009 Güncel", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_2.setTitle(QtGui.QApplication.translate("Dialog", "Analyze Report", None, QtGui.QApplication.UnicodeUTF8))
         self.label_36.setText(QtGui.QApplication.translate("Dialog", "Download :", None, QtGui.QApplication.UnicodeUTF8))
         self.label_34.setText(QtGui.QApplication.translate("Dialog", "0", None, QtGui.QApplication.UnicodeUTF8))

@@ -12,8 +12,9 @@ from constants import const
 from ui_main import Ui_Dialog
 from prepareIface import pIface
 from buildIface import bIface
-from lib import stripFilename, getPardusRelease, ratioCalc
+from lib import stripFilename, stripPath, getPardusRelease, ratioCalc
 from about import aboutDialog
+from options import optionsDialog
 import datetime
 
 
@@ -38,6 +39,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.__errDesc = {}
         self.__error = False
         self.__aboutDialog = aboutDialog()
+        self.__optionsDialog = optionsDialog()
 
         #Aliases for GUI objects
         self.__isoDir_check = self.checkBox_5
@@ -109,16 +111,59 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.pIface.onError.addEventListener( self.__errorHappened)
         self.bIface.onAction.addEventListener( self.__updateProgress)
         self.bIface.onError.addEventListener( self.__errorHappened)
+        #self.__optionsDialog.onAction.addEventListener(self.__updateProgress)
+        self.__optionsDialog.onError.addEventListener(self.__errorHappened)
+
+        if self.__optionsDialog.load():
+            self.__updateProgress(100, 100, 100, 100, const.JOB_CONF_ID, self.__jobDesc[const.JOB_SUCCES_ID])
+        self.pullOptions()
 
 
-        #Default variables                                      #It should be takes from config file, but config file not supported yet
-        self.__rootDir_edit.setText(self.pIface.getroot())
-        self.__boutDir_edit.setText(self.bIface.getcwd())
+
+
+
+
+
+    def pullOptions(self):
+        self.__paoDir_edit.setText(self.__optionsDialog.getDir(const.OPT_BPASODIR_KEY))
+        self.__bisoDir_edit.setText(self.__optionsDialog.getDir(const.OPT_BCDDIR_KEY))
+        self.__baltDir_edit.setText(self.__optionsDialog.getDir(const.OPT_BALTDIR_KEY))
+        self.__boutDir_edit.setText(self.__optionsDialog.getDir(const.OPT_BOUTDIR_KEY))
+        self.__outFile_edit.setText(self.__optionsDialog.getDir(const.OPT_PPASODIR_KEY))
+        self.__rootDir_edit.setText( self.__optionsDialog.getDir(const.OPT_PROOTDIR_KEY))
+        self.__isoDir_edit.setText(self.__optionsDialog.getDir(const.OPT_PCDDIR_KEY))
+        self.__altDir_edit.setText(self.__optionsDialog.getDir(const.OPT_PALTDIR_KEY))
+
+
+
+
+
+
+    def pushOptions(self):
+        pao = str(self.__paoDir_edit.text())
+        out = str(self.__outFile_edit.text())
+        if stripFilename(pao, ".paso") <> stripFilename(pao):
+            pao = stripPath(str(self.__paoDir_edit.text()) )
+        if stripFilename(out, ".paso") <> stripFilename(out):
+            out = stripPath(str(self.__outFile_edit.text()) )
+        self.__optionsDialog.setDir(const.OPT_BPASODIR_KEY, pao)
+        self.__optionsDialog.setDir(const.OPT_BCDDIR_KEY, str(self.__bisoDir_edit.text()))
+        self.__optionsDialog.setDir(const.OPT_BALTDIR_KEY, str(self.__baltDir_edit.text()))
+        self.__optionsDialog.setDir(const.OPT_BOUTDIR_KEY, str(self.__boutDir_edit.text()))
+        self.__optionsDialog.setDir(const.OPT_PPASODIR_KEY, out)
+        self.__optionsDialog.setDir(const.OPT_PROOTDIR_KEY, str(self.__rootDir_edit.text()) )
+        self.__optionsDialog.setDir(const.OPT_PCDDIR_KEY, str(self.__isoDir_edit.text()))
+        self.__optionsDialog.setDir(const.OPT_PALTDIR_KEY, str(self.__altDir_edit.text()))
+
+
+
 
 
 
     @QtCore.pyqtSignature("void")
     def on_pushButton_3_clicked(self):
+        self.pushOptions()
+        self.__optionsDialog.save()
         self.close()
 
 
@@ -215,6 +260,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         altDir = str(self.__altDir_edit.text())
         if  rootDir.strip() == "" :    self.__go_button.setEnabled(False)
         elif stripFilename(outFile.strip()) == "":   self.__go_button.setEnabled(False)
+        elif stripFilename(outFile.strip(), ".paso") == stripFilename(outFile.strip()):  self.__go_button.setEnabled(False)
         elif self.__isoDir_check.checkState() and isoDir.strip() == "":  self.__go_button.setEnabled(False)
         elif self.__altDir_check.checkState() and altDir.strip() == "":  self.__go_button.setEnabled(False)
         else:   self.__go_button.setEnabled(True)
@@ -442,6 +488,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
 
 
 
+
 ################################################################################
 #
 #   PROGRESS SECTION ACTIONS
@@ -494,7 +541,20 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
 
 
 
+    #Options button
+    @QtCore.pyqtSignature("void")
+    def on_pushButton_8_clicked(self):
+        #
+        self.__optionsDialog.action()
 
+
+
+
+
+    def setOptions(self):
+        self.__optionsDialog.setDir(const.OPT_ROOTDIR_KEY, self.__rootDir_edit.text())
+        self.__optionsDialog.setDir(const.OPT_OUTDIR_KEY, self.__boutDir_edit.text())
+        self.__optionsDialog.setDir(const.OPT_CDDIR_KEY, self.__bisoDir_edit.text())
 
 
 
@@ -522,6 +582,8 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.__jobDesc[const.JOB_BRP_ID] =  _("Building repo")
         self.__jobDesc[const.JOB_BIS_ID] =  _("Building iso")
         self.__jobDesc[const.JOB_SUCCES_ID] = _("Succesfully")
+        self.__jobDesc[const.JOB_CONF_ID] = _("Configuration loading")
+        self.__jobDesc[const.JOB_CONFS_ID] = _("Configuration saving")
 
         self.label_8.setText(  _("Special installation builder for Pardus Linux") )
         self.pushButton_8.setText(  _("Options") )
@@ -578,6 +640,14 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.__aboutDialog.label.setText( const.NAME )
         self.__aboutDialog.label_2.setText( const.VERSION )
 
+        #Options Dialog
+        self.__optionsDialog.setWindowTitle( self.pushButton_8.text())
+        self.__optionsDialog.groupBox.setTitle( _("User"))
+        self.__optionsDialog.label.setText( _("Full name") )
+        self.__optionsDialog.label_2.setText( _("E-mail") )
+        self.__optionsDialog.pushButton_2.setText( _("Save") )
+        self.__optionsDialog.pushButton.setText( _("Cancel") )
+
         #Error messages
         self.__errDesc[const.ERR_01_ID] = _("Directory or file not found")
         self.__errDesc[const.ERR_02_ID] = _("Bad xml structure")
@@ -588,4 +658,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.__errDesc[const.ERR_07_ID] = _("Paso file corrupted")
         self.__errDesc[const.ERR_08_ID] = _("HTTP Error")
         self.__errDesc[const.ERR_09_ID] = _("ISO image not craeted")
+        self.__errDesc[const.ERR_10_ID] = _("Configuration not loaded")
+        self.__errDesc[const.ERR_11_ID] = _("running for the first time")
+        self.__errDesc[const.ERR_12_ID] = _("Configuration not saved")
 

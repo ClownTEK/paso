@@ -436,7 +436,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Ali Erkan İMREK</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="label_23">
@@ -449,7 +449,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>alierkanimrek gmail.com</string>
+       <string/>
       </property>
       <property name="textFormat">
        <enum>Qt::AutoText</enum>
@@ -481,7 +481,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>http://</string>
+       <string/>
       </property>
       <property name="textFormat">
        <enum>Qt::RichText</enum>
@@ -519,7 +519,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Pardus 2009</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="label_29">
@@ -548,7 +548,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>10.10.2010</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="label_33">
@@ -567,7 +567,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Pardus 2009 Güncel</string>
+       <string/>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>

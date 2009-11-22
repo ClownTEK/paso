@@ -42,6 +42,8 @@ const.JOB_CHC_ID = 9
 const.JOB_BRP_ID = 10
 const.JOB_BIS_ID = 11
 const.JOB_SUCCES_ID = 12
+const.JOB_CONF_ID = 13
+const.JOB_CONFS_ID = 14
 
 
 const.OPT_CACHEPATH_VAL = "/var/cache/pisi/packages"
@@ -68,3 +70,19 @@ const.ERR_06_ID = 6
 const.ERR_07_ID = 7
 const.ERR_08_ID = 8
 const.ERR_09_ID = 9
+const.ERR_10_ID = 10
+const.ERR_11_ID = 11
+const.ERR_12_ID = 12
+
+const.OPT_USER_KEY = "user"
+const.OPT_DIRS_KEY = "dirs"
+const.OPT_USERNAME_KEY = "name"
+const.OPT_USEREMAIL_KEY = "email"
+const.OPT_BPASODIR_KEY = "build_paso"
+const.OPT_BCDDIR_KEY = "build_cd"
+const.OPT_BALTDIR_KEY = "build_alt"
+const.OPT_BOUTDIR_KEY = "build_out"
+const.OPT_PPASODIR_KEY = "prepare_paso"
+const.OPT_PROOTDIR_KEY = "prepare_root"
+const.OPT_PCDDIR_KEY = "prepare_cd"
+const.OPT_PALTDIR_KEY = "prepare_alt"

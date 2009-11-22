@@ -24,7 +24,7 @@ class aboutDialog(QtGui.QDialog, Ui_Dialog):
 
 
 
-    #Build button _______________________________________________
+    #Close button
     @QtCore.pyqtSignature("void")
     def on_pushButton_clicked(self):
         #
