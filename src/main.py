@@ -111,7 +111,6 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.pIface.onError.addEventListener( self.__errorHappened)
         self.bIface.onAction.addEventListener( self.__updateProgress)
         self.bIface.onError.addEventListener( self.__errorHappened)
-        #self.__optionsDialog.onAction.addEventListener(self.__updateProgress)
         self.__optionsDialog.onError.addEventListener(self.__errorHappened)
 
         if self.__optionsDialog.load():
@@ -289,6 +288,8 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.__go_button.setEnabled(False)
 
         #pass values to pIface
+        self.pIface.pasoMetadata.packagerName = self.__optionsDialog.getUser(const.OPT_USERNAME_KEY)
+        self.pIface.pasoMetadata.packagerEmail = self.__optionsDialog.getUser(const.OPT_USEREMAIL_KEY)
         self.pIface.pasoMetadata.name = self.__infoPName_edit.text()
         self.pIface.pasoMetadata.summary = self.__infoPSumm_edit.text()
         self.pIface.pasoMetadata.description = self.__infoPDesc_edit.toPlainText()
@@ -625,13 +626,11 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         #About Dialog
         description = _("<p>Paso is an installation builder for Pardus Linux.\
                         For moore information and new versions visit to;<br>")
-        developers = _("<p>Developer;<br>")
-        translators = _("<p>Translators;<br>")
-        copying =  _("<p>This program is free software; \
-                    you can redistribute it and/or modify it \
-                    under the terms of the GNU General Public \
-                    License as published by the Free Software Foundation.\
-                    Please read COPYING file</p>")
+        developers = _("<p>Developers;<br>")
+        translators = _("<p>Translated by;<br>")
+        copying =  _("<p>This program released under  \
+                    the terms of the GNU General Public \
+                    License. Please read COPYING file</p>")
         abouttext = description+"<a href="+const.WEBPAGE+">"+const.WEBPAGE+"</a></p>"
         abouttext += copying
         abouttext += developers + const.DEVELOPERS + "</p>"

@@ -105,10 +105,10 @@ class pasoFile(object):
         for file in altList:
             self.__files.addFile(file)
         #Save temp files
-        if lib.savefile(metadataFile, self.__metadata.toXml()) > 0:
+        if not lib.savefile(metadataFile, self.__metadata.toXml()):
             self.onError.raiseEvent( const.ERR_05_ID, metadataFile)
             return(False)
-        if lib.savefile(filesdataFile, self.__files.toXml()) > 0:
+        if not lib.savefile(filesdataFile, self.__files.toXml()):
             self.onError.raiseEvent( const.ERR_05_ID, filesdataFile)
             return(False)
         #Create file list for paso archive

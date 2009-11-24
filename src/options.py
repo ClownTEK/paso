@@ -23,9 +23,7 @@ class optionsDialog(QtGui.QDialog, Ui_Dialog):
     def __init__(self):
         #
         self.__data = config()
-        #self.onAction = eventHandler()
         self.onError = eventHandler()
-        #self.onFirstTime = eventHandler()
         QtGui.QDialog.__init__(self)
         self.setupUi(self)
 
@@ -41,7 +39,9 @@ class optionsDialog(QtGui.QDialog, Ui_Dialog):
         if not self.__data.load():
             if self.__data.onFirstTime:
                 self.onError.raiseEvent(const.JOB_CONF_ID, const.ERR_11_ID, "")
+                self.pushButton.setEnabled(False)
                 self.action()
+                self.pushButton.setEnabled(True)
             else:
                 self.onError.raiseEvent(const.JOB_CONF_ID, const.ERR_10_ID, "")
                 return(False)
@@ -103,3 +103,8 @@ class optionsDialog(QtGui.QDialog, Ui_Dialog):
 
     def getDir(self, key):
         return(self.__data.data[const.OPT_DIRS_KEY][key])
+
+
+
+    def getUser(self, key):
+        return(self.__data.data[const.OPT_USER_KEY][key])

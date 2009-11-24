@@ -1,6 +1,3 @@
-- .conf File support
-- Options menu dialog
-Release 0.2 version
 - Add tooltips to gui elements for help
 - İnşa sürecinde belirtilen adreste bulunamayan paket
   diğer depolarda da aranmalı

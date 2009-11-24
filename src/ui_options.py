@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '../qt4/options.ui'
 #
-# Created: Fri Nov 20 22:37:03 2009
+# Created: Tue Nov 24 20:45:18 2009
 #      by: PyQt4 UI code generator 4.5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -30,6 +30,7 @@ class Ui_Dialog(object):
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.pushButton = QtGui.QPushButton(Dialog)
         self.pushButton.setGeometry(QtCore.QRect(250, 190, 80, 31))
+        self.pushButton.setFocusPolicy(QtCore.Qt.NoFocus)
         self.pushButton.setObjectName("pushButton")
         self.pushButton_2 = QtGui.QPushButton(Dialog)
         self.pushButton_2.setGeometry(QtCore.QRect(160, 190, 80, 31))
