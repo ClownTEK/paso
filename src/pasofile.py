@@ -89,7 +89,10 @@ class pasoFile(object):
 
 
 
-    def create(self, outFile, listFull, altList, altDir, repoList, metadata):
+    def create(self, outFile, listFull, \
+                alt, altList, altDir, \
+                iso, isoList, isoDir, \
+                repoList, metadata, repo):
         #
         self.__file = outFile
         self.__metadata = metadata
@@ -101,7 +104,12 @@ class pasoFile(object):
         self.__files.clear()
         self.__files.repos = repoList
         for package in listFull.keys():
-            self.__files.addPackage( package, listFull[package], 0)     #FIX IT
+            size = repo.get_package_size(lib.stripFilename(package))
+            if not size and alt.is_on(package):
+                size = alt.getSize(package)
+            elif not size and iso.is_on(package):
+                size = iso.getSize(package)
+            self.__files.addPackage( package, listFull[package], size )
         for file in altList:
             self.__files.addFile(file)
         #Save temp files

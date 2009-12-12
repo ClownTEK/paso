@@ -31,6 +31,7 @@ class packageDir(object):
     def clear(self):
         self.__path = ""
         self.__uriList = []
+        self.__sizes = {}   # {"name":size, }
         self.__break = False
 
 
@@ -43,7 +44,8 @@ class packageDir(object):
         self.__uriList = lib.listdir(self.__path, [const.PISI_EXT])
         if self.__uriList:
             self.__uriList.sort()
-        for package in self.__uriList:              #It's not necessary but funny  :)
+        for package in self.__uriList:
+            self.__sizes[package] = os.stat(self.__path+"/"+package).st_size
             self.onAddPackage.raiseEvent(self.__path+"/"+package, len(self.__uriList), pos)
             pos += 1
         return( True )
@@ -77,6 +79,17 @@ class packageDir(object):
 
     def get_path(self):
         return(self.__path)
+
+
+
+
+    def getSize(self, name):
+        try:
+            result = self.__sizes[name]
+        except:
+            result = False
+        return(result)
+
 
 
     def isEmpty(self):

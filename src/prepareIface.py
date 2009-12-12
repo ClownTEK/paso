@@ -172,9 +172,11 @@ class pIface():
             self.__passedJob += 1
             self.__currentJob = const.JOB_PAS_ID
             self.__pas.create(self.pasoFile, \
-                                self.__resourceList, self.__altList, \
-                                self.altDir, \
-                                self.__repoList, self.pasoMetadata)
+                                self.__resourceList, \
+                                self.__alt, self.__altList, self.altDir, \
+                                self.__iso, self.__isoList, self.isoDir, \
+                                self.__repoList, self.pasoMetadata, \
+                                self.__rep)
 
         if not self.__error:
             self.__onProgress(self.__pas.getFileName(), 100, 100)

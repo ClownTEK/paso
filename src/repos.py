@@ -32,7 +32,9 @@ class repos(object):
     def __clear(self):
         self.__repoPath = ""
         self.__repoIndexPath = ""
-        self.__packages = {}
+        self.__packages = {}    #{"name":repo, }
+        self.__packageSizes = {}
+        self.__packageNames = {}
         self.__repos = {}
         self.__currentRepo = 1
         #self.__break = False
@@ -104,7 +106,11 @@ class repos(object):
             for package in doc.getchildren():
                 if package.tag == "Package":
                     name = package.find("Name").text
+                    size = package.find("PackageSize").text
+                    uri = package.find("PackageURI").text
                     self.__packages[name] = repo
+                    self.__packageSizes[name] = size
+                    self.__packageNames[uri] = name
                     currentElement = lib.ratioCalc(packageCount, currentPos, repoCount, self.__currentRepo)
                     self.onAddPackage.raiseEvent(repo+":"+name, 100, currentElement)
                     currentPos += 1
@@ -132,6 +138,26 @@ class repos(object):
     def get_package_repo(self,name):
         try:
             result = self.__packages[name]
+        except:
+            result = False
+        return(result)
+
+
+
+    def get_package_size(self, name):
+        if name.rfind(const.PISI_EXT) <> -1:
+            name = self.get_package_name(name)
+        try:
+            result = self.__packageSizes[name]
+        except:
+            result = False
+        return(result)
+
+
+
+    def get_package_name(self, uri):
+        try:
+            result = self.__packageNames[uri]
         except:
             result = False
         return(result)
