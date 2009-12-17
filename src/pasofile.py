@@ -113,6 +113,7 @@ class pasoFile(object):
         for file in altList:
             self.__files.addFile(file)
         #Save temp files
+        self.__metadata.repoSize = self.__files.sizeCount
         if not lib.savefile(metadataFile, self.__metadata.toXml()):
             self.onError.raiseEvent( const.ERR_05_ID, metadataFile)
             return(False)

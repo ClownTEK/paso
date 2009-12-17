@@ -29,6 +29,7 @@ class pasoMetadata(object):
         self.description = ""
         self.release = ""
         self.date = ""
+        self.repoSize = 0
 
 
 
@@ -46,6 +47,7 @@ class pasoMetadata(object):
             self.description = doc.find("Description").text
             self.release = doc.find("Release").text
             self.date = doc.find("Date").text
+            self.repoSize = int(doc.find("RepoSize").text)
             self.packagerName = doc.find("Packager").find("Name").text
             self.packagerEmail = doc.find("Packager").find("Email").text
         except:
@@ -69,6 +71,7 @@ class pasoMetadata(object):
         xml += createXmlNode("Description", self.description, indents=1)
         xml += createXmlNode("Release", self.release, indents=1)
         xml += createXmlNode("Date", self.date, indents=1)
+        xml += createXmlNode("RepoSize", str(self.repoSize), indents=1)
         xml += createXmlNode("PASO", close=True)
         return(xml)
 
@@ -100,6 +103,7 @@ class pasoFiles(object):
         self.repos = {}             #{'repo name': 'url', }
         self.packages = {}          #{'package name': {'repo':'name', 'size':'123'}, }
         self.additionals = []       #['package file name', ]
+        self.sizeCount = 0
 
 
 
@@ -154,6 +158,8 @@ class pasoFiles(object):
 
     def addPackage(self, package, repo, size):
         self.packages[package] = {'repo':repo, 'size':str(size)}
+        self.sizeCount += int(size)
+
 
 
     def addFile(self, file):
@@ -162,7 +168,5 @@ class pasoFiles(object):
 
     def addRepo(self, name, url):
         self.repos[name] = url
-
-
 
 
