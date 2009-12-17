@@ -139,3 +139,14 @@ def stripPath(uri):
     return( uri[0:uri.find(stripFilename(uri))-1] )
 
 
+
+def getSizeOfFiles(files):
+    cmd = "du -cs --bytes"
+    for file in files:
+        cmd += " "+file
+    result = os.popen(cmd)
+    raw = result.read()
+    return ( int(raw.splitlines()[len(raw.splitlines())-1].split("\t")[0]) )
+
+
+

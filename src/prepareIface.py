@@ -120,6 +120,8 @@ class pIface():
 
 
 
+    def getPrepareInfo(self):
+        return(self.__pas.getInfo())
 
 
 

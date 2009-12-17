@@ -83,6 +83,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.__reportDCount_line = self.label_35
         self.__reportDSize_line = self.label_37
         self.__reportISOSize_line = self.label_42
+        self.__infoPRepoSize_line = self.label_46
         #self.__stop_button = self.pushButton_xx        #Doesn't work, GUI freezing until python process end over
                                                         #Maybe we use python threading etc.
 
@@ -116,6 +117,8 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         if self.__optionsDialog.load():
             self.__updateProgress(100, 100, 100, 100, const.JOB_CONF_ID, self.__jobDesc[const.JOB_SUCCES_ID])
         self.pullOptions()
+
+        self.tabWidget.setCurrentIndex(1)
 
 
 
@@ -276,6 +279,10 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
             self.__infoPSumm_edit.setText(info.summary)
             self.__infoPDesc_edit.setText(info.description)
             self.__infoPHome_edit.setText(info.homepage)
+            try:
+                self.__infoPRepoSize_line.setText(str((info.repoSize/1024)/1024))
+            except:
+                pass
 
 
 
@@ -309,6 +316,10 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         if not self.__error:
             self.__updateProgress(100, 100, 100, 100, const.JOB_PAS_ID, \
                                     self.__jobDesc[const.JOB_SUCCES_ID]+" "+self.__outFile_edit.text() )
+            try:
+                self.__infoPRepoSize_line.setText(str((self.pIface.getPrepareInfo().repoSize/1024)/1024))
+            except:
+                pass
         self.__go_button.setEnabled(True)
 
 
@@ -622,6 +633,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.label_32.setText( _("Total")+":" )
         self.label_36.setText( _("Download")+":" )
         self.label_41.setText( _("Estimated ISO size")+":" )
+        self.label_45.setText( _("Repo size")+":" )
 
         #About Dialog
         description = _("<p>Paso is an installation builder for Pardus Linux.\

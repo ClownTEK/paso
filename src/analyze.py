@@ -40,6 +40,7 @@ class analyze(object):
         self.__localPackages = {}                #{"packagename":"Path"}
         self.__totalSize = 0
         self.__downloadSize = 0
+        self.__installerSize = 0
         self.__sourceName = ""
         self.__break = False
 
@@ -71,6 +72,12 @@ class analyze(object):
                 self.__downloadSize += int(pasoObject.getSize(package))
                 self.__remotePackages[package] = pasoObject.getPackageUrl(package)
                 self.onAddPackage.raiseEvent(package+"=>"+pasoObject.getPackageUrl(package), total, len(self.__localPackages) + len(self.__remotePackages))
+        installerFiles = []
+        isoRoot = lib.stripPath( isoObject.get_path() )
+        for f in const.ISOINSTALLER_FILES:
+            installerFiles.append(isoRoot+"/"+f)
+        self.__installerSize = lib.getSizeOfFiles(installerFiles)
+        print installerFiles, self.__installerSize
         return(True)
 
 
@@ -107,7 +114,7 @@ class analyze(object):
 
 
     def getSizeOfISO(self):
-        return( self.getSizeOfTotal() + int(const.ISOBOOTSIZE))
+        return( self.getSizeOfTotal() + self.__installerSize)
 
 
 

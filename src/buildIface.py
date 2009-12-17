@@ -74,11 +74,14 @@ class bIface():
 
 
 
+
+
     def __newMission(self):
         self.__currentJob = const.JOB_NONE_ID
         self.__totalJob = 0
         self.__passedJob = 0
         self.__error = False
+
 
 
 
