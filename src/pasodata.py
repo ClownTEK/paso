@@ -47,7 +47,10 @@ class pasoMetadata(object):
             self.description = doc.find("Description").text
             self.release = doc.find("Release").text
             self.date = doc.find("Date").text
-            self.repoSize = int(doc.find("RepoSize").text)
+            try:
+                self.repoSize = int(doc.find("RepoSize").text)
+            except:
+                pass
             self.packagerName = doc.find("Packager").find("Name").text
             self.packagerEmail = doc.find("Packager").find("Email").text
         except:

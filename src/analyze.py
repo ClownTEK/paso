@@ -77,7 +77,6 @@ class analyze(object):
         for f in const.ISOINSTALLER_FILES:
             installerFiles.append(isoRoot+"/"+f)
         self.__installerSize = lib.getSizeOfFiles(installerFiles)
-        print installerFiles, self.__installerSize
         return(True)
 
 
