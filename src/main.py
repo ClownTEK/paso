@@ -672,4 +672,5 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.__errDesc[const.ERR_10_ID] = _("Configuration not loaded")
         self.__errDesc[const.ERR_11_ID] = _("running for the first time")
         self.__errDesc[const.ERR_12_ID] = _("Configuration not saved")
+        self.__errDesc[const.ERR_13_ID] = _("ISO image not converted to hybrid")
 

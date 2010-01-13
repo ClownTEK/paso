@@ -77,10 +77,16 @@ class isoBuilder(object):
         #
         self.onAddPackage.raiseEvent(self.__isoName+"...", self.__totalJob, 2)
         #I copied the cmd from pardusman :)
-        cmd = "mkisofs -f -J -joliet-long -R -l -V Pardus -o '"+self.__isoName+"' -b boot/isolinux/isolinux.bin -c boot/isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table '"+self.__isoSource+"'"
+        cmd = "mkisofs -f -J -joliet-long -R -l -V PardusLiveImage -o '"+self.__isoName+"' -b boot/isolinux/isolinux.bin -c boot/isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table '"+self.__isoSource+"'"
         if os.system(cmd) <> 0:
             self.onError.raiseEvent( const.ERR_09_ID, self.__isoName)
             return(False)
+        if lib.isHybridIso(self.__isoSource):
+            self.onAddPackage.raiseEvent("(Hybrid)", self.__totalJob, 2)
+            cmd = "isohybrid -partok -offset 1 %s" % self.__isoName
+            if os.system(cmd) <> 0:
+                self.onError.raiseEvent( const.ERR_13_ID, self.__isoName) # FIX ME
+                return(False)
         return( True )
 
 

@@ -74,6 +74,7 @@ const.ERR_09_ID = 9
 const.ERR_10_ID = 10
 const.ERR_11_ID = 11
 const.ERR_12_ID = 12
+const.ERR_13_ID = 13
 
 const.OPT_USER_KEY = "user"
 const.OPT_DIRS_KEY = "dirs"

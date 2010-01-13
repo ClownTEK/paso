@@ -150,3 +150,11 @@ def getSizeOfFiles(files):
 
 
 
+def isHybridIso(path):
+    file = path+"/boot/isolinux/isolinux.cfg"
+    cfg = getfile(file)
+    if file:
+        if cfg.find("root=") <> -1: return(0)#No Hybrid
+        else:   return(1)#Hybrid
+    else:
+        return(-1)#Unknown
