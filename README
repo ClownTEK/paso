@@ -28,7 +28,7 @@ REQUIREMENTS
     - python >= 2.5
     - qt >= 4.5
     - cdrtools >= 2.01.01_alpha63
-
+    - syslinux >= 3.83
 
 
 TRANSLATION
