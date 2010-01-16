@@ -109,6 +109,8 @@ class pasoFile(object):
                 size = alt.getSize(package)
             elif not size and iso.is_on(package):
                 size = iso.getSize(package)
+            elif not size:
+                size = 0
             self.__files.addPackage( package, listFull[package], size )
         for file in altList:
             self.__files.addFile(file)
