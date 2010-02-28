@@ -28,7 +28,7 @@ class pasoFile(object):
 
 
 
-    def __init__(self):
+    def __init__(self, parentObj):
         #
         self.__metadata = pasoMetadata()
         self.__files = pasoFiles()
@@ -36,20 +36,19 @@ class pasoFile(object):
         self.onAddPackage = eventHandler()      #(elementName, totalElements, currentElement)
         self.onError = eventHandler()           #( errorCode, errorData)
         self.__files.onAdd.addEventListener(self.__onPasoFilesRead)
+        self.parent = parentObj
 
 
 
 
     def __clear(self):
         self.__file = ""
-
         self.__path = ""
         self.__targetName = ""
         self.__sourceName = ""
         self.__listRawData = ""
         self.__listFull = {}
         self.__pasoRepo = []
-        self.__break = False
 
 
 
@@ -104,6 +103,10 @@ class pasoFile(object):
         self.__files.clear()
         self.__files.repos = repoList
         for package in listFull.keys():
+            if self.parent.error:
+                self.__clear()
+                self.onError.raiseEvent(const.ERR_03_ID, "")
+                return(False)
             size = repo.get_package_size(lib.stripFilename(package))
             if not size and alt.is_on(package):
                 size = alt.getSize(package)
@@ -113,6 +116,10 @@ class pasoFile(object):
                 size = 0
             self.__files.addPackage( package, listFull[package], size )
         for file in altList:
+            if self.parent.error:
+                self.__clear()
+                self.onError.raiseEvent(const.ERR_03_ID, "")
+                return(False)
             self.__files.addFile(file)
         #Save temp files
         self.__metadata.repoSize = self.__files.sizeCount
@@ -126,6 +133,10 @@ class pasoFile(object):
         pasoFileList[const.PASO_METAFILE_VAL] = metadataFile
         pasoFileList[const.PASO_DATAFILE_VAL] = filesdataFile
         for aFile in altList:
+            if self.parent.error:
+                self.__clear()
+                self.onError.raiseEvent(const.ERR_03_ID, "")
+                return(False)
             pasoFileList[aFile] = altDir+"/"+aFile
         #Create paso file
         if not self.__createPaso(pasoFileList):
@@ -147,6 +158,10 @@ class pasoFile(object):
         totalJob = len(fileList)
         jobPos = 1
         for aFile in fileList.keys():
+            if self.parent.error:
+                self.__clear()
+                self.onError.raiseEvent(const.ERR_03_ID, "")
+                return(False)
             self.onAddPackage.raiseEvent(fileList[aFile], totalJob, jobPos)
             try:
                 target.add(fileList[aFile], aFile, False)
@@ -182,6 +197,10 @@ class pasoFile(object):
                 self.onError.raiseEvent( const.ERR_02_ID, self.__file+":"+const.PASO_DATAFILE_VAL)
                 return( False )
             handle.close()
+            if self.parent.error:
+                self.__clear()
+                self.onError.raiseEvent(const.ERR_03_ID, "")
+                return(False)
             return(True)
         else:
             self.onError.raiseEvent( const.ERR_01_ID, filename)

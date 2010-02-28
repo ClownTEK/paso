@@ -26,13 +26,14 @@ class bIface():
 
     def __init__(self):
         #
-        self.__pao = pasoFile()
-        self.__iso = packageDir()
-        self.__alt = packageDir()
-        self.__chc = packageDir()
-        self.__alz = analyze()
-        self.__brp = repoBuilder()
-        self.__bis = isoBuilder()
+        self.error = False
+        self.__pao = pasoFile(self)
+        self.__iso = packageDir(self)
+        self.__alt = packageDir(self)
+        self.__chc = packageDir(self)
+        self.__alz = analyze(self)
+        self.__brp = repoBuilder(self)
+        self.__bis = isoBuilder(self)
         self.__clear()
         self.__newMission()
 
@@ -80,11 +81,13 @@ class bIface():
         self.__currentJob = const.JOB_NONE_ID
         self.__totalJob = 0
         self.__passedJob = 0
-        self.__error = False
+        self.error = False
 
 
 
 
+    def stopProgress(self):
+        self.error = True
 
 
 
@@ -157,23 +160,23 @@ class bIface():
 
         self.__chc.clear()
 
-        if doReadPaso and not self.__error:
+        if doReadPaso and not self.error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_PAO_ID
             self.__pao.load()
-        if doReadIso and not self.__error:
+        if doReadIso and not self.error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_ISO_ID
             self.__iso.load(self.isoDir+const.OPT_CDREPOPATH_VAL)
-        if doReadAlt and not self.__error:
+        if doReadAlt and not self.error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_ALT_ID
             self.__alt.load(self.altDir)
-        if not self.__error:
+        if not self.error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_CHC_ID
             self.__chc.load(const.OPT_CACHEPATH_VAL)
-        if not self.__error:
+        if not self.error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_ALZ_ID
             self.__alz.analyze(self.__pao, self.__iso, self.__alt, self.__chc)
@@ -209,11 +212,11 @@ class bIface():
         self.__totalJob += 2
 
         #Build iso repo
-        if not self.__error:
+        if not self.error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_BRP_ID
             self.__brp.build(self.__alz, self.outDir, self.pasoFile)
-        if not self.__error:
+        if not self.error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_BIS_ID
             self.__bis.build( self.pasoFile, self.outDir, self.isoDir)
@@ -247,7 +250,7 @@ class bIface():
 
 
     def __onError(self, errorCode, errorData):
-        self.__error = True
+        self.error = True
         self.onError.raiseEvent(self.__currentJob, errorCode, errorData)
 
 

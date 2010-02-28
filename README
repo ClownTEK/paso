@@ -31,6 +31,20 @@ REQUIREMENTS
     - syslinux >= 3.83
 
 
+INSTALLATION
+
+    Use Pisi package from Pardus repositories or download section of project home
+
+
+RUN WITHOUT INSTALL
+
+    Extract the archive
+    Run command;
+        python setup.py build
+        python build/lib/paso.py
+
+
 TRANSLATION
 
     I dont think it is ready for translation yet, keep a close watch on /po dir...
+

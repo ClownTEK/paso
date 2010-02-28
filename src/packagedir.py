@@ -21,10 +21,11 @@ class packageDir(object):
 
 
 
-    def __init__(self):
+    def __init__(self, parentObj):
         self.clear()
         self.onAddPackage = eventHandler()      #(elementName, totalElements, currentElement)
         self.onError = eventHandler()           #(errorCode, errorData)
+        self.parent = parentObj
 
 
 
@@ -45,6 +46,10 @@ class packageDir(object):
         if self.__uriList:
             self.__uriList.sort()
         for package in self.__uriList:
+            if self.parent.error:
+                self.clear()
+                self.onError.raiseEvent(const.ERR_03_ID, "")
+                return(False)
             self.__sizes[package] = os.stat(self.__path+"/"+package).st_size
             self.onAddPackage.raiseEvent(self.__path+"/"+package, len(self.__uriList), pos)
             pos += 1

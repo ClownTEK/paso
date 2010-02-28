@@ -7,9 +7,13 @@
 
 import gettext
 from PyQt4 import *
+import os
+
 
 from constants import const
+from lib import eventHandler
 from ui_main import Ui_Dialog
+import ui_progress
 from prepareIface import pIface
 from buildIface import bIface
 from lib import stripFilename, stripPath, getPardusRelease, ratioCalc
@@ -33,6 +37,8 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         #
         QtGui.QDialog.__init__(self)
         self.setupUi(self)
+        self.progressDialog = progressDialog()
+
         self.pIface = pIface()
         self.bIface = bIface()
         self.__jobDesc = {}     #{ID:"text",..}
@@ -40,6 +46,8 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.__error = False
         self.__aboutDialog = aboutDialog()
         self.__optionsDialog = optionsDialog()
+        self.__isProgressVisible = False
+
 
         #Aliases for GUI objects
         self.__isoDir_check = self.checkBox_5
@@ -54,8 +62,6 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.__rootDir_browse = self.pushButton_10
         self.__readIns_check = self.checkBox_2
         self.__readRepo_check = self.checkBox
-        self.__prgBar = self.progressBar
-        self.__prgText = self.label_7
         self.__go_button = self.pushButton_2
         self.__paoDir_edit = self.lineEdit_11
         self.__readPao_check = self.checkBox_3
@@ -112,10 +118,10 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.pIface.onError.addEventListener( self.__errorHappened)
         self.bIface.onAction.addEventListener( self.__updateProgress)
         self.bIface.onError.addEventListener( self.__errorHappened)
+        self.progressDialog.onStop.addEventListener( self.__stopProgress )
         self.__optionsDialog.onError.addEventListener(self.__errorHappened)
 
-        if self.__optionsDialog.load():
-            self.__updateProgress(100, 100, 100, 100, const.JOB_CONF_ID, self.__jobDesc[const.JOB_SUCCES_ID])
+        self.__optionsDialog.load()
         self.pullOptions()
 
         self.tabWidget.setCurrentIndex(1)
@@ -248,7 +254,8 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
             if stripFilename(str(fileName), ".paso") == stripFilename(str(fileName)):
                 fileName += ".paso"
             self.__outFile_edit.setText(fileName)
-            self.__updatePrepareInfo(self.pIface.getInfo( str(fileName)))
+            if os.path.isfile(fileName):
+                self.__updatePrepareInfo(self.pIface.getInfo( str(fileName)))
 
 
 
@@ -312,10 +319,15 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.pIface.isoDir = str(self.__isoDir_edit.text())
         self.pIface.altDir = str(self.__altDir_edit.text())
 
+        self.progressDialog.pushButton_2.setEnabled(False)
+        self.__isProgressVisible = True
         self.pIface.go_to_crazy()
+        self.progressDialog.pushButton_2.setEnabled(True)
+        self.__isProgressVisible = False
         if not self.__error:
             self.__updateProgress(100, 100, 100, 100, const.JOB_PAS_ID, \
                                     self.__jobDesc[const.JOB_SUCCES_ID]+" "+self.__outFile_edit.text() )
+            self.alert(self.__jobDesc[const.JOB_SUCCES_ID]+" "+self.__outFile_edit.text())
             try:
                 self.__infoPRepoSize_line.setText(str((self.pIface.getPrepareInfo().repoSize/1024)/1024))
             except:
@@ -460,7 +472,11 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.bIface.readPasoCheck = bool(self.__readPao_check.checkState())
         self.bIface.readAltCheck = bool(self.__readAlt_check.checkState())
         self.bIface.altDirCheck = bool(self.__baltDir_check.checkState())
+        self.progressDialog.pushButton_2.setEnabled(False)
+        self.__isProgressVisible = True
         self.bIface.doAnalyze()
+        self.progressDialog.pushButton_2.setEnabled(True)
+        self.__isProgressVisible = False
         self.bIface.forcePasoRead = False
         self.bIface.forceCdRead = False
         self.bIface.forceAltRead = False
@@ -468,6 +484,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         if not self.__error:
             self.__build_button.setEnabled(True)
             self.__updateProgress(100, 100, 100, 100, const.JOB_ALZ_ID,self.__jobDesc[const.JOB_SUCCES_ID])
+            self.alert(self.__jobDesc[const.JOB_ALZ_ID]+" "+self.__jobDesc[const.JOB_SUCCES_ID])
             report = self.bIface.getReport()
             self.__reportCount_line.setText( str(report[0]) )
             self.__reportSize_line.setText( str(report[1] / 1024) )
@@ -485,11 +502,17 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         #
         self.__error = False
         self.bIface.outDir =  str(self.__boutDir_edit.text())
+        self.progressDialog.pushButton_2.setEnabled(False)
+        self.__isProgressVisible = True
         self.bIface.build()
+        self.progressDialog.pushButton_2.setEnabled(True)
+        self.__isProgressVisible = False
         if not self.__error:
             self.__updateProgress(100, 100, 100, 100, const.JOB_BIS_ID, \
                                     self.__jobDesc[const.JOB_SUCCES_ID]+" "+ \
                                     self.__boutDir_edit.text()+"/"+stripFilename(str(self.__paoDir_edit.text()), const.PASO_EXT)+const.ISO_EXT )
+            self.alert(self.__jobDesc[const.JOB_SUCCES_ID]+" "+ \
+                                    self.__boutDir_edit.text()+"/"+stripFilename(str(self.__paoDir_edit.text()), const.PASO_EXT)+const.ISO_EXT)
 
 
 
@@ -509,12 +532,15 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
 
     def __updateProgress(self, totalJobs, currentJob, totalElements, currentElement, jobId, elementName):
         #
+        if  not self.progressDialog.isVisible() and self.__isProgressVisible:
+            self.progressDialog.clear()
+            self.progressDialog.show()
         currentPos = ratioCalc(totalElements, currentElement, totalJobs, currentJob)
-        self.__prgText.setText(self.__jobDesc[jobId]+"... "+elementName)
-        self.__prgBar.setValue(currentPos)
-        self.__prgText.repaint()
-        self.__prgBar.repaint()
-        print (self.__prgText.text())
+        currentMsg = self.__jobDesc[jobId]+"... "+elementName
+        self.progressDialog.progressBar.setValue(currentPos)
+        self.progressDialog.textEdit.append(currentMsg)
+        QtGui.QApplication.processEvents()
+        print (currentMsg)
 
 
 
@@ -524,12 +550,16 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         #
         self.__error = True
         errText = self.__jobDesc[jobId]+". "+self.__errDesc[errorCode]+":"+errorData
-        self.__prgText.setText(errText)
+        if errorCode <> const.ERR_03_ID:
+            self.alert(errText)
+        self.progressDialog.textEdit.append(errText)
         print( errText)
 
 
 
-
+    def __stopProgress(self):
+        self.pIface.stopProgress()
+        self.bIface.stopProgress()
 
 
 
@@ -571,6 +601,13 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
 
 
 
+    def alert(self, msg):
+        a = QtGui.QMessageBox()
+        a.setWindowTitle(self.windowTitle())
+        a.setText(msg)
+        a.exec_()
+
+
 ################################################################################
 #
 #   i18n
@@ -606,7 +643,6 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.label_19.setText(  _("Mounted Pardus CD directory") )
         self.label_18.setText(  _("Alternative packages directory") )
         self.label_10.setText(  _("Output directory") )
-        self.groupBox_4.setTitle(  _("Progress") )
         self.pushButton_3.setText(  _("Close") )
         self.pushButton_18.setText(  _("Analyze") )
         self.pushButton_17.setText(  _("Build") )
@@ -635,6 +671,13 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.label_41.setText( _("Estimated ISO size")+":" )
         self.label_45.setText( _("Repo size")+":" )
 
+        #ProgressDialog
+        self.progressDialog.groupBox_4.setTitle(  _("Progress") )
+        self.progressDialog.pushButton.setText(  _("Stop") )
+        self.progressDialog.pushButton_2.setText(  _("Close") )
+        self.progressDialog.setWindowTitle(self.progressDialog.groupBox_4.title())
+
+
         #About Dialog
         description = _("<p>Paso is an installation builder for Pardus Linux.\
                         For moore information and new versions visit to;<br>")
@@ -650,6 +693,8 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.__aboutDialog.textBrowser.setText(abouttext)
         self.__aboutDialog.label.setText( const.NAME )
         self.__aboutDialog.label_2.setText( const.VERSION )
+        self.__aboutDialog.setWindowTitle( self.pushButton_7.text())
+
 
         #Options Dialog
         self.__optionsDialog.setWindowTitle( self.pushButton_8.text())
@@ -674,3 +719,39 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.__errDesc[const.ERR_12_ID] = _("Configuration not saved")
         self.__errDesc[const.ERR_13_ID] = _("ISO image not converted to hybrid")
 
+
+
+
+
+
+
+class progressDialog(QtGui.QDialog, ui_progress.Ui_Dialog):
+
+    def __init__(self):
+        QtGui.QDialog.__init__(self)
+        self.setupUi(self)
+        self.setModal(True)
+        self.onStop = eventHandler()    #Empty
+
+
+
+
+    #Stop button
+    @QtCore.pyqtSignature("void")
+    def on_pushButton_clicked(self):
+        #
+        self.onStop.raiseEvent()
+        self.pushButton_2.setEnabled(True)
+
+
+
+    #Close button
+    @QtCore.pyqtSignature("void")
+    def on_pushButton_2_clicked(self):
+        #
+        self.close()
+
+
+
+    def clear(self):
+        self.textEdit.clear()

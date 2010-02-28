@@ -22,10 +22,11 @@ class repos(object):
 
 
 
-    def __init__(self):
+    def __init__(self, parentObj):
         self.__clear()
         self.onAddPackage = eventHandler()      #(elementName, totalElements, currentElement)
         self.onError = eventHandler()           #(errorCode, errorData)
+        self.parent = parentObj
 
 
 
@@ -104,6 +105,10 @@ class repos(object):
             doc = etree.fromstring(xml)
             packageCount = len(doc.findall("Package") )
             for package in doc.getchildren():
+                if self.parent.error:
+                    self.__clear()
+                    self.onError.raiseEvent(const.ERR_03_ID, "")
+                    return(False)
                 if package.tag == "Package":
                     name = package.find("Name").text
                     size = package.find("PackageSize").text

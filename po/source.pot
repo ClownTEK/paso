@@ -1,0 +1,304 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-28 15:15+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../addfiles/paso.desktop.in.h:1
+msgid "Installation Builder for Pardus Linux"
+msgstr ""
+
+#: ../src/main.py:620
+msgid "Select directory"
+msgstr ""
+
+#: ../src/main.py:621
+msgid "Select file"
+msgstr ""
+
+#: ../src/main.py:622
+msgid "Reading installed packages"
+msgstr ""
+
+#: ../src/main.py:623
+msgid "Reading repos"
+msgstr ""
+
+#: ../src/main.py:624
+msgid "Reading Pardus CD repo"
+msgstr ""
+
+#: ../src/main.py:625
+msgid "Reading alternative packages"
+msgstr ""
+
+#: ../src/main.py:626
+msgid "Building resource list"
+msgstr ""
+
+#: ../src/main.py:627
+msgid "Creating paso file"
+msgstr ""
+
+#: ../src/main.py:628
+msgid "Reading paso file"
+msgstr ""
+
+#: ../src/main.py:629
+msgid "Analyzing packages"
+msgstr ""
+
+#: ../src/main.py:630
+msgid "Reading pisi cache"
+msgstr ""
+
+#: ../src/main.py:631
+msgid "Building repo"
+msgstr ""
+
+#: ../src/main.py:632
+msgid "Building iso"
+msgstr ""
+
+#: ../src/main.py:633
+msgid "Succesfully"
+msgstr ""
+
+#: ../src/main.py:634
+msgid "Configuration loading"
+msgstr ""
+
+#: ../src/main.py:635
+msgid "Configuration saving"
+msgstr ""
+
+#: ../src/main.py:637
+msgid "Special installation builder for Pardus Linux"
+msgstr ""
+
+#: ../src/main.py:638
+msgid "Options"
+msgstr ""
+
+#: ../src/main.py:639
+msgid "About"
+msgstr ""
+
+#: ../src/main.py:640 ../src/main.py:648
+msgid "Build"
+msgstr ""
+
+#: ../src/main.py:641 ../src/main.py:655
+msgid "Prepare"
+msgstr ""
+
+#: ../src/main.py:642
+msgid ".paso File"
+msgstr ""
+
+#: ../src/main.py:643
+msgid "Mounted Pardus CD directory"
+msgstr ""
+
+#: ../src/main.py:644
+msgid "Alternative packages directory"
+msgstr ""
+
+#: ../src/main.py:645
+msgid "Output directory"
+msgstr ""
+
+#: ../src/main.py:646 ../src/main.py:677
+msgid "Close"
+msgstr ""
+
+#: ../src/main.py:647
+msgid "Analyze"
+msgstr ""
+
+#: ../src/main.py:649
+msgid "Pardus Root directory"
+msgstr ""
+
+#: ../src/main.py:653
+msgid "Don't read installed packages again"
+msgstr ""
+
+#: ../src/main.py:654
+msgid "Don't read repo index again"
+msgstr ""
+
+#: ../src/main.py:656
+msgid "Don't read paso packages again"
+msgstr ""
+
+#: ../src/main.py:657
+msgid "Don't read alternative packages again"
+msgstr ""
+
+#: ../src/main.py:658
+msgid "Info"
+msgstr ""
+
+#: ../src/main.py:660
+msgid "Analyze report"
+msgstr ""
+
+#: ../src/main.py:661
+msgid "Name"
+msgstr ""
+
+#: ../src/main.py:662
+msgid "Summary"
+msgstr ""
+
+#: ../src/main.py:663
+msgid "Description"
+msgstr ""
+
+#: ../src/main.py:664
+msgid "Homepage"
+msgstr ""
+
+#: ../src/main.py:666
+msgid "Release"
+msgstr ""
+
+#: ../src/main.py:667
+msgid "Date"
+msgstr ""
+
+#: ../src/main.py:668
+msgid "Prepared by"
+msgstr ""
+
+#: ../src/main.py:669
+msgid "Total"
+msgstr ""
+
+#: ../src/main.py:670
+msgid "Download"
+msgstr ""
+
+#: ../src/main.py:671
+msgid "Estimated ISO size"
+msgstr ""
+
+#: ../src/main.py:672
+msgid "Repo size"
+msgstr ""
+
+#. ProgressDialog
+#: ../src/main.py:675
+msgid "Progress"
+msgstr ""
+
+#: ../src/main.py:676
+msgid "Stop"
+msgstr ""
+
+#. About Dialog
+#: ../src/main.py:682
+msgid ""
+"<p>Paso is an installation builder for Pardus Linux.                        "
+"For moore information and new versions visit to;<br>"
+msgstr ""
+
+#: ../src/main.py:684
+msgid "<p>Developers;<br>"
+msgstr ""
+
+#: ../src/main.py:685
+msgid "<p>Translated by;<br>"
+msgstr ""
+
+#: ../src/main.py:686
+msgid ""
+"<p>This program released under                      the terms of the GNU "
+"General Public                     License. Please read COPYING file</p>"
+msgstr ""
+
+#: ../src/main.py:701
+msgid "User"
+msgstr ""
+
+#: ../src/main.py:702
+msgid "Full name"
+msgstr ""
+
+#: ../src/main.py:703
+msgid "E-mail"
+msgstr ""
+
+#: ../src/main.py:704
+msgid "Save"
+msgstr ""
+
+#: ../src/main.py:705
+msgid "Cancel"
+msgstr ""
+
+#. Error messages
+#: ../src/main.py:708
+msgid "Directory or file not found"
+msgstr ""
+
+#: ../src/main.py:709
+msgid "Bad xml structure"
+msgstr ""
+
+#: ../src/main.py:710
+msgid "User break"
+msgstr ""
+
+#: ../src/main.py:711
+msgid "Package not found"
+msgstr ""
+
+#: ../src/main.py:712
+msgid "File not created"
+msgstr ""
+
+#: ../src/main.py:713
+msgid "Bad paso info"
+msgstr ""
+
+#: ../src/main.py:714
+msgid "Paso file corrupted"
+msgstr ""
+
+#: ../src/main.py:715
+msgid "HTTP Error"
+msgstr ""
+
+#: ../src/main.py:716
+msgid "ISO image not craeted"
+msgstr ""
+
+#: ../src/main.py:717
+msgid "Configuration not loaded"
+msgstr ""
+
+#: ../src/main.py:718
+msgid "running for the first time"
+msgstr ""
+
+#: ../src/main.py:719
+msgid "Configuration not saved"
+msgstr ""
+
+#: ../src/main.py:720
+msgid "ISO image not converted to hybrid"
+msgstr ""

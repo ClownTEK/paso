@@ -21,11 +21,12 @@ class isoBuilder(object):
 
 
 
-    def __init__(self):
+    def __init__(self, parentObj):
         self.clear()
         self.onAddPackage = eventHandler()      #(elementName, totalElements, currentElement)
         self.onError = eventHandler()           #(errorCode, errorData)
         self.__totalJob = 3
+        self.parent = parentObj
 
 
 
@@ -33,7 +34,7 @@ class isoBuilder(object):
     def clear(self):
         self.__isoSource = ""
         self.__isoName = ""
-        self.__break = False
+
 
 
 
@@ -60,6 +61,10 @@ class isoBuilder(object):
         if uriList:
             uriList.sort()
         for uri in uriList:
+            if self.parent.error:
+                self.clear()
+                self.onError.raiseEvent(const.ERR_03_ID, "")
+                return(False)
             if uri == "boot" or uri == "pardus.img":
                 self.onAddPackage.raiseEvent(uri+"...", self.__totalJob, 1)
                 cmd = "cp -rf '"+isoDir+"/"+uri+"' '"+self.__isoSource+"'"

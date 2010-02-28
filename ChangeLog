@@ -1,3 +1,8 @@
+2010-02-28 Ali Erkan İMREK <alierkanimrek.gmail.com>
+     * Write setup.py and build i18n files
+     * Progress break feature added (need more testing)
+     * Gui freezing problem solved
+     * Change ProgressBar as a sub dialog
 2010-01-16 Ali Erkan İMREK <alierkanimrek.gmail.com>
      * Fixed #Issue 5
 2010-01-13 Ali Erkan İMREK <alierkanimrek.gmail.com>

@@ -22,17 +22,18 @@ class repoBuilder(object):
 
 
 
-    def __init__(self):
+    def __init__(self, parentObj):
         self.clear()
         self.onAddPackage = eventHandler()      #(elementName, totalElements, currentElement)
         self.onError = eventHandler()           #( errorCode, errorData)
+        self.parent = parentObj
 
 
 
 
     def clear(self):
         self.__target = ""
-        self.__break = False
+
 
 
 
@@ -50,6 +51,10 @@ class repoBuilder(object):
         if not self.__target:  return(False)
         #Copy local packages to repo
         for package in alz.getLocalPackages():
+            if self.parent.error:
+                self.clear()
+                self.onError.raiseEvent(const.ERR_03_ID, "")
+                return(False)
             currentPackage += 1
             packageUri = alz.getLocalPath(package)+"/"+package
             if os.path.isfile(self.__target+"/"+lib.stripFilename(packageUri)):
@@ -67,6 +72,10 @@ class repoBuilder(object):
                 return(False)
         #Download remote packages
         for package in alz.getRemotePackages():
+            if self.parent.error:
+                self.clear()
+                self.onError.raiseEvent(const.ERR_03_ID, "")
+                return(False)
             currentPackage += 1
             if os.path.isfile(self.__target+"/"+lib.stripFilename(package)):
                 self.onAddPackage.raiseEvent(package+" in "+self.__target, totalPackage, currentPackage)

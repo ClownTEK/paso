@@ -20,7 +20,7 @@ from pasodata import pasoMetadata
 
 
 
-class pIface():
+class pIface(object):
     #Interface class between prepare operation modules and GUI
 
 
@@ -28,11 +28,12 @@ class pIface():
 
     def __init__(self):
         #
-        self.__ins = installed()
-        self.__rep = repos()
-        self.__iso = packageDir()
-        self.__alt = packageDir()
-        self.__pas = pasoFile()
+        self.error = False
+        self.__ins = installed(self)
+        self.__rep = repos(self)
+        self.__iso = packageDir(self)
+        self.__alt = packageDir(self)
+        self.__pas = pasoFile(self)
         self.__clear()
         self.__newMission()
 
@@ -71,13 +72,17 @@ class pIface():
         self.__currentJob = const.JOB_NONE_ID
         self.__totalJob = 0
         self.__passedJob = 0
-        self.__error = False
+        self.error = False
         self.__resourceList = {}        #{"packageUri": "repoName" or "" } Full list
         self.__isoList = []             #["packageUri",...]
         self.__altList = []             #["packageUri",...]
         self.__repoList = {}            #{"repoName": "httpUrl", }
 
 
+
+
+    def stopProgress(self):
+        self.error = True
 
 
 
@@ -120,8 +125,10 @@ class pIface():
 
 
 
+
     def getPrepareInfo(self):
         return(self.__pas.getInfo())
+
 
 
 
@@ -145,32 +152,32 @@ class pIface():
         self.__totalJob += 2    #__buildResources & __pas.create
 
         #Load installed package job
-        if doReadInstalled and not self.__error:
+        if doReadInstalled and not self.error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_INS_ID
             self.__ins.load(self.rootDir+const.OPT_PACKPATH_VAL)
         #Load repos
-        if doReadRepos and not self.__error:
+        if doReadRepos and not self.error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_REP_ID
             self.__rep.load(self.rootDir+const.OPT_INFOPATH_VAL, self.rootDir+const.OPT_INDEXPATH_VAL)
         #Load iso packages dir
-        if doReadIso and not self.__error:
+        if doReadIso and not self.error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_ISO_ID
             self.__iso.load(self.isoFile+const.OPT_CDREPOPATH_VAL)
         #Load alternate packages dir
-        if doReadAlt and not self.__error:
+        if doReadAlt and not self.error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_ALT_ID
             self.__alt.load(self.altDir)
         #Build resource list
-        if not self.__error:
+        if not self.error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_RES_ID
             self.__buildResources()
         #Create .paso file
-        if not self.__error:
+        if not self.error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_PAS_ID
             self.__pas.create(self.pasoFile, \
@@ -180,7 +187,7 @@ class pIface():
                                 self.__repoList, self.pasoMetadata, \
                                 self.__rep)
 
-        if not self.__error:
+        if not self.error:
             self.__onProgress(self.__pas.getFileName(), 100, 100)
 
 
@@ -201,7 +208,7 @@ class pIface():
 
     def __onError(self, errorCode, errorData):
         #
-        self.__error = True
+        self.error = True
         self.onError.raiseEvent(self.__currentJob, errorCode, errorData)
 
 
@@ -223,6 +230,9 @@ class pIface():
         packages = self.__ins.getPackageList()
         self.__repoList = self.__rep.get_repos()
         for package in packages:
+            if self.error:
+                self.__onError(const.ERR_03_ID, "")
+                break
             packageUri = self.__ins.getPackageUri(package)
             self.__resourceList[packageUri] = ""
             #Search

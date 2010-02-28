@@ -26,10 +26,11 @@ class analyze(object):
 
 
 
-    def __init__(self):
+    def __init__(self, parentObj):
         self.__clear()
         self.onAddPackage = eventHandler()      #(elementName, totalElements, currentElement)
         self.onError = eventHandler()           #( errorCode, errorData)
+        self.parent = parentObj
 
 
 
@@ -42,7 +43,7 @@ class analyze(object):
         self.__downloadSize = 0
         self.__installerSize = 0
         self.__sourceName = ""
-        self.__break = False
+
 
 
 
@@ -52,6 +53,11 @@ class analyze(object):
         self.__clear()
         total = len( pasoObject.getPackageList() )
         for package in pasoObject.getPackageList():
+            if self.parent.error:
+                self.__clear()
+                print "YES"
+                self.onError.raiseEvent(const.ERR_03_ID, "")
+                return(False)
             self.__totalSize += int(pasoObject.getSize(package))
             if pasoObject.isOn(package):
                 self.__localPackages[package] = pasoObject.getPasoFileName()

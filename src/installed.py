@@ -25,10 +25,11 @@ class installed(object):
 
 
 
-    def __init__(self):
+    def __init__(self, parentObj):
         self.__clear()
         self.onAddPackage = eventHandler()      #(elementName, totalElements, currentElement)
         self.onError = eventHandler()           #(errorCode, errorData)
+        self.parent = parentObj
 
 
 
@@ -37,7 +38,7 @@ class installed(object):
         self.__path = ""
         self.__uriList = []
         self.__packages = {}
-        self.__break = False
+
 
 
 
@@ -57,19 +58,24 @@ class installed(object):
         totalPackages = len(self.__uriList)
         #Walk
         for uri in self.__uriList:
+            if self.parent.error:
+                self.__clear()
+                self.onError.raiseEvent(const.ERR_03_ID, "")
+                return(False)
             #Open metadata and parse
             xml = lib.getfile(self.__path+uri+"/"+const.PACKAGE_INFO_FILE)
             if xml != False:
                 package = self.__parse(xml)
                 if not package:
                     self.onError.raiseEvent( const.ERR_02_ID, uri)
-                    return False
+                    self.__clear()
+                    return(False)
                 self.__packages[package["name"]] = package
                 self.onAddPackage.raiseEvent(package["name"], totalPackages, len(self.__packages))
             else:
                 self.onError.raiseEvent( const.ERR_01_ID, uri)
-                break
-
+                self.__clear()
+                return(False)
 
 
 
@@ -116,10 +122,6 @@ class installed(object):
         #
         return( self.__packages.keys() )
 
-
-
-    def stop(self):
-        self.__break = True
 
 
 

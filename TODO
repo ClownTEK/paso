@@ -1,12 +1,7 @@
-- Calculate the package sizes
 - İnşa sürecinde belirtilen adreste bulunamayan paket
   diğer depolarda da aranmalı
-Release 0.3 version
 - Add tooltips to gui elements for help
 - Export the package list for pisi installation
 - Build translation files
-Release 0.4 version
 - Screenshot preview support
 - Allow to update .paso file info
-~
-- Gui freezing while process running, do something
