@@ -148,20 +148,20 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
 
 
     def pushOptions(self):
-        pao = str(self.__paoDir_edit.text())
-        out = str(self.__outFile_edit.text())
-        if stripFilename(pao, ".paso") <> stripFilename(pao):
-            pao = stripPath(str(self.__paoDir_edit.text()) )
-        if stripFilename(out, ".paso") <> stripFilename(out):
-            out = stripPath(str(self.__outFile_edit.text()) )
+        pao = self.__paoDir_edit.text()
+        out = self.__outFile_edit.text()
+        if stripFilename(str(pao), ".paso") <> stripFilename(str(pao)):
+            pao = unicode(stripPath(str(self.__paoDir_edit.text()) ), "utf-8")
+        if stripFilename(str(out), ".paso") <> stripFilename(str(out)):
+            out = unicode(stripPath(str(self.__outFile_edit.text()) ), "utf-8")
         self.__optionsDialog.setDir(const.OPT_BPASODIR_KEY, pao)
-        self.__optionsDialog.setDir(const.OPT_BCDDIR_KEY, str(self.__bisoDir_edit.text()))
-        self.__optionsDialog.setDir(const.OPT_BALTDIR_KEY, str(self.__baltDir_edit.text()))
-        self.__optionsDialog.setDir(const.OPT_BOUTDIR_KEY, str(self.__boutDir_edit.text()))
+        self.__optionsDialog.setDir(const.OPT_BCDDIR_KEY, self.__bisoDir_edit.text())
+        self.__optionsDialog.setDir(const.OPT_BALTDIR_KEY, self.__baltDir_edit.text())
+        self.__optionsDialog.setDir(const.OPT_BOUTDIR_KEY, self.__boutDir_edit.text())
         self.__optionsDialog.setDir(const.OPT_PPASODIR_KEY, out)
-        self.__optionsDialog.setDir(const.OPT_PROOTDIR_KEY, str(self.__rootDir_edit.text()) )
-        self.__optionsDialog.setDir(const.OPT_PCDDIR_KEY, str(self.__isoDir_edit.text()))
-        self.__optionsDialog.setDir(const.OPT_PALTDIR_KEY, str(self.__altDir_edit.text()))
+        self.__optionsDialog.setDir(const.OPT_PROOTDIR_KEY, self.__rootDir_edit.text())
+        self.__optionsDialog.setDir(const.OPT_PCDDIR_KEY, self.__isoDir_edit.text())
+        self.__optionsDialog.setDir(const.OPT_PALTDIR_KEY, self.__altDir_edit.text())
 
 
 

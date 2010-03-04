@@ -1,3 +1,5 @@
+2010-03-04 Ali Erkan İMREK <alierkanimrek.gmail.com>
+     * Fixed corrupt unicode characters in the inputs
 2010-02-28 Ali Erkan İMREK <alierkanimrek.gmail.com>
      * Write setup.py and build i18n files
      * Progress break feature added (need more testing)
