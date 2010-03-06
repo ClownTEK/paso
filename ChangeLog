@@ -1,3 +1,6 @@
+2010-03-06 Ali Erkan İMREK <alierkanimrek.gmail.com>
+     * If root directory is different from system root, raise error. Fixed.
+     * Some tiny corrections
 2010-03-04 Ali Erkan İMREK <alierkanimrek.gmail.com>
      * Fixed corrupt unicode characters in the inputs
 2010-02-28 Ali Erkan İMREK <alierkanimrek.gmail.com>

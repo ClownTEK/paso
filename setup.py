@@ -76,7 +76,7 @@ class Build(build):
         print os.system("intltool-merge -d po addfiles/%s.desktop.in build/desktop/%s.desktop" %(const.APP_NAME, const.APP_NAME) )
         print "Build bin file"
         self.copy_file("src/%s" %const.APP_NAME, "build/bin/%s" %const.APP_NAME )  #FIX FILE NAME
-        print("\n\nYou can run Paso by this command; \n python bulid/lib/paso.py ")
+        print("\n\nYou can run Paso by this command; \n python build/lib/paso.py ")
 
 
 

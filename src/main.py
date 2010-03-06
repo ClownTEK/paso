@@ -314,7 +314,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.pIface.altDirCheck = bool(self.__altDir_check.checkState())
         self.pIface.readInsCheck = bool(self.__readIns_check.checkState())
         self.pIface.readRepoCheck = bool(self.__readRepo_check.checkState())
-        self.pIface.rootDir = str(self.__rootDir_edit.text())
+        self.pIface.rootDir = str(self.__rootDir_edit.text()+"/")
         self.pIface.pasoFile = str(self.__outFile_edit.text())
         self.pIface.isoDir = str(self.__isoDir_edit.text())
         self.pIface.altDir = str(self.__altDir_edit.text())
@@ -634,7 +634,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.__jobDesc[const.JOB_CONF_ID] = _("Configuration loading")
         self.__jobDesc[const.JOB_CONFS_ID] = _("Configuration saving")
 
-        self.label_8.setText(  _("Special installation builder for Pardus Linux") )
+        self.label_8.setText(  _("Installation builder for Pardus Linux") )
         self.pushButton_8.setText(  _("Options") )
         self.pushButton_7.setText(  _("About") )
         self.tabWidget.setTabText(0,  _("Build") )
@@ -679,13 +679,10 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
 
 
         #About Dialog
-        description = _("<p>Paso is an installation builder for Pardus Linux.\
-                        For moore information and new versions visit to;<br>")
+        description = _("<p>Paso is an installation builder for Pardus Linux. For moore information and new versions visit to;<br>")
         developers = _("<p>Developers;<br>")
         translators = _("<p>Translated by;<br>")
-        copying =  _("<p>This program released under  \
-                    the terms of the GNU General Public \
-                    License. Please read COPYING file</p>")
+        copying =  _("<p>This program released under the terms of the GNU General Public License. Please read COPYING file</p>")
         abouttext = description+"<a href="+const.WEBPAGE+">"+const.WEBPAGE+"</a></p>"
         abouttext += copying
         abouttext += developers + const.DEVELOPERS + "</p>"
@@ -715,7 +712,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.__errDesc[const.ERR_08_ID] = _("HTTP Error")
         self.__errDesc[const.ERR_09_ID] = _("ISO image not craeted")
         self.__errDesc[const.ERR_10_ID] = _("Configuration not loaded")
-        self.__errDesc[const.ERR_11_ID] = _("running for the first time")
+        self.__errDesc[const.ERR_11_ID] = _("Running for the first time")
         self.__errDesc[const.ERR_12_ID] = _("Configuration not saved")
         self.__errDesc[const.ERR_13_ID] = _("ISO image not converted to hybrid")
 

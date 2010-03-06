@@ -130,7 +130,10 @@ def createXmlNode(name, value={}, attributes={}, close=False, indents=0, linefee
 
 
 def getPardusRelease(root):
-    return( getfile(root+"etc/pardus-release").strip() )
+    if os.path.isfile(root+"etc/pardus-release"):
+        return( getfile(root+"etc/pardus-release").strip() )
+    else:
+        return(False)
 
 
 
