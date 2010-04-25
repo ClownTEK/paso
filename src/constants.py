@@ -19,7 +19,7 @@ const = _const()
 #Include const and use global values below
 
 const.NAME = "Paso"
-const.VERSION = "0.3.2"
+const.VERSION = "0.3.3"
 const.WEBPAGE = "http://github.com/alierkanimrek/paso"
 const.DEVELOPERS = "Ali Erkan İMREK  alierkanimrek[at]gmail.com <br> \
                     "

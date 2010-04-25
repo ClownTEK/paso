@@ -38,13 +38,19 @@ INSTALLATION
 
 RUN WITHOUT INSTALL
 
-    Extract the archive
-    Run command;
+    -Extract the archive
+    -Run command;
         python setup.py build
         python build/lib/paso.py
 
 
 TRANSLATION
 
-    I dont think it is ready for translation yet, keep a close watch on /po dir...
+    -Extract the archive
+    -Run command;
+        python setup.py build-po <lang>
+
+    -Translate the po file (You can use Poedit or Lokalize)
+    -E-mail me the translated .po file. <alierkanimrek at gmail.com>
+
 

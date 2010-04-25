@@ -10,6 +10,7 @@ from constants import const
 from lib import eventHandler
 import os
 import tarfile
+import shutil
 from pasodata import pasoMetadata
 from pasodata import pasoFiles
 
@@ -205,6 +206,44 @@ class pasoFile(object):
         else:
             self.onError.raiseEvent( const.ERR_01_ID, filename)
             return(False)
+
+
+
+
+
+    def updateInfo(self, outFile, metadata):
+        #
+        self.__file = outFile
+        path = outFile.strip(lib.stripFilename(self.__file))+"tmp/"
+        metadataFile = path+const.PASO_METAFILE_VAL
+        #Update metadata
+        self.__metadata.name = metadata.name
+        self.__metadata.homepage = metadata.homepage
+        self.__metadata.summary = metadata.summary
+        self.__metadata.description = metadata.description
+        #Extract current archive
+        #Unfortunately 'a:gz' is  not possible for compressed archives
+        try:
+            target = tarfile.open(self.__file)
+            aList = target.getnames()
+            target.extractall(path)
+        except:
+            self.onError.raiseEvent( const.ERR_05_ID, self.__file)
+            return(False)
+        target.close()
+        #Save the updated file
+        if not lib.savefile(metadataFile, self.__metadata.toXml()):
+            self.onError.raiseEvent( const.ERR_05_ID, metadataFile)
+            return(False)
+        fileList = {}
+        for f in aList:
+            fileList[f] = path+f
+        #Create new archive
+        if self.__createPaso(fileList):
+            shutil.rmtree(path)
+            return(True)
+        shutil.rmtree(path)
+        return(False)
 
 
 

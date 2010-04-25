@@ -8,7 +8,7 @@
 
 import sys
 from PyQt4 import QtCore, QtGui
-from main import mainDialog
+from paso.main import mainDialog
 
 
 def run():

@@ -1,7 +1,5 @@
-- İnşa sürecinde belirtilen adreste bulunamayan paket
+- İnşa sürecinde belirtilen depoda bulunamayan paket
   diğer depolarda da aranmalı
-- Add tooltips to gui elements for help
 - Export the package list for pisi installation
-- Build translation files
-- Screenshot preview support
-- Allow to update .paso file info
+- Prepare from repositories like Pardusman
+

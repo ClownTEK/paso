@@ -1,5 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
+#
+# Python project dist and i18n utilities
+# Ali Erkan İMREK <alierkanimrek at gmail.com>
 #
 
 import os
@@ -15,6 +19,19 @@ from src.constants import const
 
 
 
+
+def help():
+    print "My Python project dist and i18n utilities\n"
+    print "Examples:\n"
+    print "\tClean project    : python setup.py clear"
+    print "\tBuild project    : python setup.py build"
+    print "\tInstall project  : python setup.py install"
+    print "\tUpdate locales   : python setup.py msg-update"
+    print "\tBuild .po file   : python setup.py build-po tr"
+    print "\tShow help        : python setup.py help"
+
+
+
 def clear():
     os.system("find ./ -iname '*.pyc' |xargs rm -rfv")
     os.system("find ./ -iname '*~' |xargs rm -rfv")
@@ -27,6 +44,7 @@ def clear():
 
 
 def msgUpdate():
+    clear()
     # Generate POT file
     os.chdir("po")
     os.system("/usr/bin/intltool-update -p")
@@ -34,9 +52,27 @@ def msgUpdate():
     # Update PO files
     for item in os.listdir("."):
         if item.endswith(".po"):
+            print "Updating %s" %item
             os.system("msgmerge -U %s source.pot" % (item) )
     os.chdir("..")
+
+
+
+
+
+def buildpo():
     clear()
+    # Generate PO file
+    os.chdir("po")
+    try:
+        os.system("/usr/bin/msginit -l %s" %sys.argv[2])
+    except:
+        print "Example: python setup.py build-po en"
+        pass
+    os.chdir("..")
+
+
+
 
 
 
@@ -53,21 +89,21 @@ def makeDirs(dir):
 class Build(build):
     def run(self):
         # Clear source and build data
+        libdir = "build/lib/%s" %const.APP_NAME
         clear()
-        msgUpdate()
         print os.system("/bin/rm -rf build")
-        makeDirs("build/lib")
+        makeDirs(libdir)
         makeDirs("build/desktop")
         makeDirs("build/bin")
         makeDirs("build/locales")
         print "Build codes..."
-        os.system("cp -Rv src/*.py build/lib")
+        os.system("cp -Rv src/*.py %s" %libdir)
         # Collect UI files
         print "Build ui..."
         for filename in glob.glob1("qt4", "*.ui"):
-            print os.system("/usr/bin/pyuic4 -o build/lib/ui_%s.py qt4/%s" % (filename.split(".")[0], filename))
+            print os.system("/usr/bin/pyuic4 -o %s/ui_%s.py qt4/%s" % (libdir, filename.split(".")[0], filename))
         for filename in glob.glob1("qt4", "*.qrc"):
-            print os.system("/usr/bin/pyrcc4 -o build/lib/%s_rc.py qt4/%s" % (filename.split(".")[0], filename))
+            print os.system("/usr/bin/pyrcc4 -o %s/%s_rc.py qt4/%s" % (libdir, filename.split(".")[0], filename))
         print "Build locales..."
         for filename in glob.glob1("po", "*.po"):
             lang = filename.rsplit(".", 1)[0]
@@ -75,8 +111,9 @@ class Build(build):
         print "Build .desktop file"
         print os.system("intltool-merge -d po addfiles/%s.desktop.in build/desktop/%s.desktop" %(const.APP_NAME, const.APP_NAME) )
         print "Build bin file"
-        self.copy_file("src/%s" %const.APP_NAME, "build/bin/%s" %const.APP_NAME )  #FIX FILE NAME
-        print("\n\nYou can run Paso by this command; \n python build/lib/paso.py ")
+        self.copy_file("src/%s.py" %const.APP_NAME, "build/bin/%s" %const.APP_NAME )
+        self.copy_file("src/%s.py" %const.APP_NAME, "build/lib/" )
+        print("\n\nYou can run %s by this command; \n python build/lib/%s.py" %(const.APP_NAME, const.APP_NAME))
 
 
 
@@ -124,16 +161,25 @@ class Install(install):
         os.chmod("%s/%s" %(bin_dir,const.APP_NAME), 0755)
         # Install Libraries
         print "Installing libraries... "
-        print os.system("cp -v build/lib/* %s" %lib_dir )
+        print os.system("cp -v build/lib/%s/* %s" %(const.APP_NAME, lib_dir) )
 
 
 
-if "msgupdate" in sys.argv:
+
+if "msg-update" in sys.argv:
     msgUpdate()
+    sys.exit(0)
+if "build-po" in sys.argv:
+    buildpo()
     sys.exit(0)
 if "clear" in sys.argv:
     clear()
     sys.exit(0)
+if len(sys.argv) < 2 or "help" in sys.argv:
+    help()
+    sys.exit(0)
+
+
 
 
 setup(
@@ -146,6 +192,6 @@ setup(
       data_files        = [],
       cmdclass          = {
                             'build': Build,
-                            'install': Install,
+                            'install': Install
                           }
 )

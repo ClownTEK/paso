@@ -1,3 +1,16 @@
+2010-04-25 Version 0.3.3 Released
+    * Paso information update is provided
+    * If root directory is different from system root, raise error. Fixed.
+    * Some tiny corrections
+    * i18n functions added to setup utility
+2010-04-25 Ali Erkan İMREK <alierkanimrek.gmail.com>
+    * i18n functions added to setup utility
+    * setup.py: i18n functions
+2010-04-24 Ali Erkan İMREK <alierkanimrek.gmail.com>
+    * Paso information update is provided
+    * main.py and main.ui: Add button and controls
+    * prepareIface.py: Add updateInfo() proxy
+    * pasofile.py: Add updateInfo() worker
 2010-03-06 Ali Erkan İMREK <alierkanimrek.gmail.com>
      * If root directory is different from system root, raise error. Fixed.
      * Some tiny corrections

@@ -290,6 +290,9 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
                 self.__infoPRepoSize_line.setText(str((info.repoSize/1024)/1024))
             except:
                 pass
+            self.pushButton_5.setEnabled(True)
+        else:
+            self.pushButton_5.setEnabled(False)
 
 
 
@@ -338,6 +341,23 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
 
 
 
+    #Save button
+    @QtCore.pyqtSignature("void")
+    def on_pushButton_5_clicked(self):
+        #
+        #pass values to pIface
+        self.pIface.pasoMetadata.packagerName = self.__optionsDialog.getUser(const.OPT_USERNAME_KEY)
+        self.pIface.pasoMetadata.packagerEmail = self.__optionsDialog.getUser(const.OPT_USEREMAIL_KEY)
+        self.pIface.pasoMetadata.name = self.__infoPName_edit.text()
+        self.pIface.pasoMetadata.summary = self.__infoPSumm_edit.text()
+        self.pIface.pasoMetadata.description = self.__infoPDesc_edit.toPlainText()
+        self.pIface.pasoMetadata.homepage = self.__infoPHome_edit.text()
+        #self.pIface.pasoMetadata.date = datetime.datetime.now().strftime("%d/%m/%Y")
+        #self.pIface.pasoMetadata.release = getPardusRelease(self.__rootDir_edit.text())
+        self.pIface.pasoFile = str(self.__outFile_edit.text())
+        self.pIface.updateInfo()
+
+
 
 
 
@@ -363,6 +383,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
             self.__build_button.setEnabled(False)
             self.bIface.forcePasoRead =  True
             self.__updateBuildInfo(self.bIface.getInfo( str(fileName)))
+
 
 
 
@@ -449,6 +470,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
             self.__infoBDate_line.setText(info.date)
             self.__infoBPName_line.setText(info.packagerName)
             self.__infoBPEmail_line.setText(info.packagerEmail)
+
 
 
 
@@ -652,7 +674,8 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.label_5.setText( self.label_18.text() )
         self.checkBox_2.setText(  _("Don't read installed packages again") )
         self.checkBox.setText(  _("Don't read repo index again") )
-        self.pushButton_2.setText(  _("Prepare") )
+        self.pushButton_2.setText( _("Prepare") )
+        self.pushButton_5.setText( _("Save") )
         self.__readPao_check.setText(  _("Don't read paso packages again") )
         self.__readAlt_check.setText(  _("Don't read alternative packages again") )
         self.groupBox_3.setTitle( _("Info") )

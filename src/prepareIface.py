@@ -194,6 +194,11 @@ class pIface(object):
 
 
 
+    def updateInfo(self):
+        self.__pas.updateInfo(self.pasoFile, self.pasoMetadata)
+
+
+
 
     def __onProgress(self, elementName, totalElements, currentElement):
         #
