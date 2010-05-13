@@ -59,7 +59,7 @@ const.CONFIG_FILE = ".paso.conf"
 const.PASO_EXT = ".paso"
 const.ISO_EXT = ".iso"
 const.PISI_EXT = ".pisi"
-const.ISOINSTALLER_FILES = ["boot", "pardus.img"]
+const.ISOINSTALLER_FILES = ["boot", "pardus.img", "license"]
 
 
 const.ERR_01_ID = 1

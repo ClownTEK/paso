@@ -65,7 +65,7 @@ class isoBuilder(object):
                 self.clear()
                 self.onError.raiseEvent(const.ERR_03_ID, "")
                 return(False)
-            if uri == "boot" or uri == "pardus.img":
+            if uri in const.ISOINSTALLER_FILES:
                 self.onAddPackage.raiseEvent(uri+"...", self.__totalJob, 1)
                 cmd = "cp -rf '"+isoDir+"/"+uri+"' '"+self.__isoSource+"'"
                 if os.system(cmd) <> 0:

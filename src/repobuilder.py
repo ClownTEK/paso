@@ -100,14 +100,14 @@ class repoBuilder(object):
             try:
                 if not os.path.isdir(out+"/"+path):
                     os.mkdir(out+"/"+path)
-                if not os.path.isdir(repoPath):
-                    try:
-                        os.mkdir(repoPath)
-                    except:
-                        self.onError.raiseEvent( const.ERR_05_ID, repoPath)
-                        return(False)
             except:
                 self.onError.raiseEvent( const.ERR_05_ID, out+"/"+path)
+                return(False)
+        if not os.path.isdir(repoPath):
+            try:
+                os.mkdir(repoPath)
+            except:
+                self.onError.raiseEvent( const.ERR_05_ID, repoPath)
                 return(False)
         return( repoPath )
 
