@@ -1,3 +1,5 @@
+2010-05-13 Ali Erkan İMREK <alierkanimrek.gmail.com>
+    * prepareIface.py: Issue 6 fixed.
 2010-04-25 Version 0.3.3 Released
     * Paso information update is provided
     * If root directory is different from system root, raise error. Fixed.

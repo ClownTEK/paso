@@ -165,7 +165,7 @@ class pIface(object):
         if doReadIso and not self.error:
             self.__passedJob += 1
             self.__currentJob = const.JOB_ISO_ID
-            self.__iso.load(self.isoFile+const.OPT_CDREPOPATH_VAL)
+            self.__iso.load(self.isoDir+const.OPT_CDREPOPATH_VAL)
         #Load alternate packages dir
         if doReadAlt and not self.error:
             self.__passedJob += 1
