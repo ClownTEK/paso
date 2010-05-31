@@ -92,6 +92,9 @@ class isoBuilder(object):
             if os.system(cmd) <> 0:
                 self.onError.raiseEvent( const.ERR_13_ID, self.__isoName) # FIX ME
                 return(False)
+            self.onAddPackage.raiseEvent("(Sha1sum)", self.__totalJob, 2)
+            cmd = "sha1sum %s > %s.sha1sum" %(self.__isoName, self.__isoName)
+            os.system(cmd)
         return( True )
 
 

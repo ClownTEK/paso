@@ -63,6 +63,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.__readIns_check = self.checkBox_2
         self.__readRepo_check = self.checkBox
         self.__go_button = self.pushButton_2
+        self.__express_button = self.pushButton_6
         self.__paoDir_edit = self.lineEdit_11
         self.__readPao_check = self.checkBox_3
         self.__readAlt_check = self.checkBox_6
@@ -267,12 +268,16 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         outFile = str(self.__outFile_edit.text())
         isoDir = str(self.__isoDir_edit.text())
         altDir = str(self.__altDir_edit.text())
-        if  rootDir.strip() == "" :    self.__go_button.setEnabled(False)
-        elif stripFilename(outFile.strip()) == "":   self.__go_button.setEnabled(False)
-        elif stripFilename(outFile.strip(), ".paso") == stripFilename(outFile.strip()):  self.__go_button.setEnabled(False)
-        elif self.__isoDir_check.checkState() and isoDir.strip() == "":  self.__go_button.setEnabled(False)
-        elif self.__altDir_check.checkState() and altDir.strip() == "":  self.__go_button.setEnabled(False)
-        else:   self.__go_button.setEnabled(True)
+        if  rootDir.strip() == "" or stripFilename(outFile.strip()) == "" \
+            or stripFilename(outFile.strip(), ".paso") == stripFilename(outFile.strip()) \
+            or self.__altDir_check.checkState() and altDir.strip() == "":
+            self.__go_button.setEnabled(False)
+            self.__express_button.setEnabled(False)
+        else:
+            self.__go_button.setEnabled(True)
+            self.__express_button.setEnabled(True)
+        if isoDir.strip() == "":
+            self.__express_button.setEnabled(False)
 
 
 
@@ -303,6 +308,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         #
         self.__error = False
         self.__go_button.setEnabled(False)
+        self.__express_button.setEnabled(False)
 
         #pass values to pIface
         self.pIface.pasoMetadata.packagerName = self.__optionsDialog.getUser(const.OPT_USERNAME_KEY)
@@ -336,6 +342,8 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
             except:
                 pass
         self.__go_button.setEnabled(True)
+        self.__express_button.setEnabled(True)
+
 
 
 
@@ -361,6 +369,27 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
 
 
 
+
+    #EXPRESS button
+    @QtCore.pyqtSignature("void")
+    def on_pushButton_6_clicked(self):
+        #
+        self.__error = False
+        self.__go_button.setEnabled(False)
+        self.__express_button.setEnabled(False)
+        self.on_pushButton_2_clicked()
+        if not self.__error:
+            self.tabWidget.setCurrentIndex(0)
+            self.__paoDir_edit.setText(self.__outFile_edit.text())
+            self.__boutDir_edit.setText( QtCore.QString(stripPath( unicode(self.__outFile_edit.text(), "utf-8") )) )
+            self.__bisoDir_edit.setText( self.__isoDir_edit.text() )
+            self.__baltDir_edit.setText( self.__altDir_edit.text() )
+            self.__baltDir_check.setCheckState(2)
+            self.bIface.forcePasoRead =  True
+            self.__updateBuildInfo(self.bIface.getInfo( str(self.__outFile_edit.text())))
+            self.on_pushButton_18_clicked()
+            if not self.__error:
+                self.on_pushButton_17_clicked()
 
 
 
@@ -676,6 +705,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.checkBox.setText(  _("Don't read repo index again") )
         self.pushButton_2.setText( _("Prepare") )
         self.pushButton_5.setText( _("Save") )
+        self.pushButton_6.setText( _("Prepare and build") )
         self.__readPao_check.setText(  _("Don't read paso packages again") )
         self.__readAlt_check.setText(  _("Don't read alternative packages again") )
         self.groupBox_3.setTitle( _("Info") )

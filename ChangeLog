@@ -1,3 +1,6 @@
+2010-05-31 Ali Erkan İMREK <alierkanimrek.gmail.com>
+    *main.py: Prepare and build action has added
+    *isobuilder.py: Sha1sum calculating has added
 2010-05-13 Ali Erkan İMREK <alierkanimrek.gmail.com>
     * perobuilder.py: Repo dir couldn't be create if iso root is exist, fixed.
     * constants.py and isobuilder.py: license Dir added to build process.
