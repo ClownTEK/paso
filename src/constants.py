@@ -23,7 +23,7 @@ const.VERSION = "0.3.3"
 const.WEBPAGE = "http://github.com/alierkanimrek/paso"
 const.DEVELOPERS = "Ali Erkan İMREK  alierkanimrek[at]gmail.com <br> \
                     "
-const.TRANSLATORS = ""
+const.TRANSLATORS = "Mutlu Can YILMAZ (tr)<br>"
 
 const.APP_NAME = "paso"
 const.APP_I18NDIR = "/usr/share/locale/"

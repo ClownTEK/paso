@@ -1,4 +1,7 @@
 2010-05-31 Ali Erkan İMREK <alierkanimrek.gmail.com>
+    *main.py: Dialog message syntax error fixed
+    *po/tr.po and constants.py: Thanks to Mutlu Can YILMAZ for Turkish translation
+2010-05-31 Ali Erkan İMREK <alierkanimrek.gmail.com>
     *main.py: Prepare and build action has added
     *isobuilder.py: Sha1sum calculating has added
 2010-05-13 Ali Erkan İMREK <alierkanimrek.gmail.com>

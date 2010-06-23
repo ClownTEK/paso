@@ -763,7 +763,7 @@ class mainDialog(QtGui.QDialog, Ui_Dialog):
         self.__errDesc[const.ERR_06_ID] = _("Bad paso info")
         self.__errDesc[const.ERR_07_ID] = _("Paso file corrupted")
         self.__errDesc[const.ERR_08_ID] = _("HTTP Error")
-        self.__errDesc[const.ERR_09_ID] = _("ISO image not craeted")
+        self.__errDesc[const.ERR_09_ID] = _("ISO image not created")
         self.__errDesc[const.ERR_10_ID] = _("Configuration not loaded")
         self.__errDesc[const.ERR_11_ID] = _("Running for the first time")
         self.__errDesc[const.ERR_12_ID] = _("Configuration not saved")
