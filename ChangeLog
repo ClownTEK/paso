@@ -1,4 +1,11 @@
-2010-05-31 Ali Erkan İMREK <alierkanimrek.gmail.com>
+2010-06-26 Version 0.3.4 Released
+    * Issue 6 fixed
+    * Repo dir couldn't be create if iso root is exist, fixed.
+    * license Dir added to build process.
+    * Prepare and build action has added
+    * Sha1sum calculating has added
+    * Turkish translation provided
+2010-06-24 Ali Erkan İMREK <alierkanimrek.gmail.com>
     *main.py: Dialog message syntax error fixed
     *po/tr.po and constants.py: Thanks to Mutlu Can YILMAZ for Turkish translation
 2010-05-31 Ali Erkan İMREK <alierkanimrek.gmail.com>
