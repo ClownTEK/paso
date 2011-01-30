@@ -1,5 +1,9 @@
 Paso is an installation builder for Pardus Linux.
 
+(This project is not maintained for Pardus 2009,
+I'm re-writing new version on my playground for Pardus 2011.
+I will commit it over here when ready)
+
 Pardus is installed by YALI (Yet Another Linux Installer).
 YALI sets up the system by pisi packages from the installation media.
 Paso just builds the special package repository for installation,
