@@ -1,123 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1">
 <context>
-    <name>AboutDialog</name>
-</context>
-<context>
     <name>MainDialog</name>
     <message>
-        <location filename="main.py" line="339"/>
+        <location filename="main.py" line="342"/>
         <source>Welcome, Paso needs your personal information, please continue and create your profile.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="340"/>
+        <location filename="main.py" line="343"/>
         <source>The project has been modified.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="341"/>
+        <location filename="main.py" line="344"/>
         <source>Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="342"/>
+        <location filename="main.py" line="345"/>
         <source>Package list could not be read.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="343"/>
+        <location filename="main.py" line="346"/>
         <source>Loading information of packages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="344"/>
+        <location filename="main.py" line="347"/>
         <source>Package could not be read.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="345"/>
+        <location filename="main.py" line="348"/>
         <source>Pisi configuration could not be read.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="346"/>
+        <location filename="main.py" line="349"/>
         <source>Pisi repository information could not be read.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="347"/>
+        <location filename="main.py" line="350"/>
         <source>Directories could not be created on workspace.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="348"/>
+        <location filename="main.py" line="351"/>
         <source>Searching package...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="349"/>
+        <location filename="main.py" line="352"/>
         <source>Pisi package could not be found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="350"/>
+        <location filename="main.py" line="353"/>
         <source>Downloading or copying package...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="351"/>
+        <location filename="main.py" line="354"/>
         <source>Building repository index.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="352"/>
+        <location filename="main.py" line="355"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="353"/>
+        <location filename="main.py" line="356"/>
         <source>Installation repository index could not be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="354"/>
+        <location filename="main.py" line="357"/>
         <source>Copying installation system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="355"/>
+        <location filename="main.py" line="358"/>
         <source>Pardus installation system could not be copied from installation media.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="356"/>
+        <location filename="main.py" line="359"/>
         <source>Creating installation image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="357"/>
+        <location filename="main.py" line="360"/>
         <source>Installation image could not be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="358"/>
+        <location filename="main.py" line="361"/>
         <source>Calculating verification code (SHA1SUM).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="359"/>
+        <location filename="main.py" line="362"/>
         <source>Verification code could not be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="360"/>
+        <location filename="main.py" line="363"/>
         <source>Image successfully created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="361"/>
+        <location filename="main.py" line="364"/>
         <source>Project directories are creating on workspace.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main.py" line="365"/>
+        <source>Paso file could not be opened.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main.py" line="366"/>
+        <source>Paso file could not be saved.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

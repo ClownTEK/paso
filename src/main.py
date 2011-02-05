@@ -114,7 +114,8 @@ class mainWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.actionSave_as.setEnabled(True)
                 self.actionBuild_installation_image.setEnabled(True)
                 self.setWindowTitle("%s   -   %s" %(const.NAME, self.pasoFName))
-
+            else:
+                self.message(self.msg[23])
 
 
 
@@ -126,12 +127,14 @@ class mainWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.pasoFName = unicode(fileName)
                 if self.pasoFName[len(self.pasoFName)-5:] != const.PASO_EXT:
                     self.pasoFName = self.pasoFName+const.PASO_EXT
-        if self.pasoFName and savePaso(self.pasoinfo.getHeader(), self.pasopackages.getPackages(), self.pasoFName):
-            self.pasoinfo.changed = False
-            self.pasopackages.changed = False
-            self.pasoinfo.setTitle(os.path.basename(self.pasoFName))
-            self.setWindowTitle("%s   -   %s" %(const.NAME, unicode(self.pasoFName)))
-
+        if self.pasoFName:
+            if savePaso(self.pasoinfo.getHeader(), self.pasopackages.getPackages(), self.pasoFName):
+                self.pasoinfo.changed = False
+                self.pasopackages.changed = False
+                self.pasoinfo.setTitle(os.path.basename(self.pasoFName))
+                self.setWindowTitle("%s   -   %s" %(const.NAME, unicode(self.pasoFName)))
+            else:
+                self.message(self.msg[24])
 
 
 
@@ -359,3 +362,5 @@ class mainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.msg[20] = QtGui.QApplication.translate("MainDialog", "Verification code could not be created.", None, QtGui.QApplication.UnicodeUTF8)
         self.msg[21] = QtGui.QApplication.translate("MainDialog", "Image successfully created.", None, QtGui.QApplication.UnicodeUTF8)
         self.msg[22] = QtGui.QApplication.translate("MainDialog", "Project directories are creating on workspace.", None, QtGui.QApplication.UnicodeUTF8)
+        self.msg[23] = QtGui.QApplication.translate("MainDialog", "Paso file could not be opened.", None, QtGui.QApplication.UnicodeUTF8)
+        self.msg[24] = QtGui.QApplication.translate("MainDialog", "Paso file could not be saved.", None, QtGui.QApplication.UnicodeUTF8)

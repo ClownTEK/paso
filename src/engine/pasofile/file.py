@@ -39,7 +39,10 @@ class pasofile(object):
 
     def load(self, location):
         self.__file = path.normpath(location)
-        xml = zlib.decompress(getfile(self.__file))
+        try:
+            xml = zlib.decompress(getfile(self.__file))
+        except:
+            return(False)
         if not xml:
             self.onError.raiseEvent(self.__actCode, "01", self.__file)
             return(False)
