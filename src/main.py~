@@ -51,7 +51,6 @@ class mainWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.preferences.exec_()
 
         self.pasoFName = ""
-        self.setWindowTitle("%s   -   %s" %(const.NAME, self.pasoFName))
 
         self.move(( (QtGui.QApplication.desktop().width()- self.width()) / 2 ),
             ( (QtGui.QApplication.desktop().height()- self.height()) / 2 ))

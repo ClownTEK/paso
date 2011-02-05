@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/">
+    <file>Paso_logo128.png</file>
+    <file>Paso_logo32.png</file>
+  </qresource>
+</RCC>

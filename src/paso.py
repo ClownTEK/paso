@@ -8,13 +8,17 @@
 
 import sys
 from PyQt4 import QtCore, QtGui
-from paso.main import mainDialog
+from paso.main import mainWindow
 
 
 def run():
     app = QtGui.QApplication(sys.argv)
-    dialog = mainDialog()
-    dialog.show()
+    locale = QtCore.QLocale.system().name()
+    translator = QtCore.QTranslator()
+    translator.load("/usr/share/paso/translations/%s.qm" % locale)
+    app.installTranslator(translator)
+    window = mainWindow()
+    window.show()
     return( app.exec_())
 
 
@@ -22,3 +26,4 @@ def run():
 
 if __name__ == "__main__":
     run()
+
