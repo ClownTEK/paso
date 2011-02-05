@@ -7,7 +7,7 @@
 
 
 from PyQt4 import *
-from ui_isopackagesourcedialog import Ui_Dialog
+from ui_isopackagesourcedialog import Ui_packageSourceDialog
 from uicontrol_packagesource import sourceListControl
 from constants import const
 from os import path
@@ -20,7 +20,7 @@ from os import path
 
 
 
-class isoPackageSource(QtGui.QDialog, Ui_Dialog):
+class isoPackageSource(QtGui.QDialog, Ui_packageSourceDialog):
 
 
     def __init__(self):

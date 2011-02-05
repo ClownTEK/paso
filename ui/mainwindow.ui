@@ -31,10 +31,10 @@
    <bool>false</bool>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string notr="true">MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../rc/paso.qrc">
     <normaloff>:/Paso_logo32.png</normaloff>:/Paso_logo32.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">

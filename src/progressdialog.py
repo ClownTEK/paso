@@ -7,7 +7,7 @@
 
 
 from PyQt4 import *
-from ui_progressdialog import Ui_Dialog
+from ui_progressdialog import Ui_progressDialog
 
 
 
@@ -18,7 +18,7 @@ from ui_progressdialog import Ui_Dialog
 
 
 
-class progress(QtGui.QDialog, Ui_Dialog):
+class progress(QtGui.QDialog, Ui_progressDialog):
 
 
     def __init__(self):

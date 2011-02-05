@@ -7,7 +7,7 @@
 
 
 from PyQt4 import *
-from ui_preferencesdialog import Ui_Dialog
+from ui_preferencesdialog import Ui_preferencesDialog
 from uicontrol_packagesource import sourceListControl
 from config import config
 
@@ -20,7 +20,7 @@ from config import config
 
 
 
-class preferences(QtGui.QDialog, Ui_Dialog):
+class preferences(QtGui.QDialog, Ui_preferencesDialog):
 
 
     def __init__(self):

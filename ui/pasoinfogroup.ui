@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GroupBox</class>
- <widget class="QGroupBox" name="GroupBox">
+ <class>pasoInfoGroup</class>
+ <widget class="QGroupBox" name="pasoInfoGroup">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>GroupBox</string>
+   <string notr="true">PasoInfoGroup</string>
   </property>
   <property name="title">
    <string>Paso Info</string>

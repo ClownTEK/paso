@@ -7,7 +7,7 @@
 
 
 from PyQt4 import *
-from ui_pasoinfogroup import Ui_GroupBox
+from ui_pasoinfogroup import Ui_pasoInfoGroup
 from engine.pasofile.types import header
 #import gettext
 
@@ -19,7 +19,7 @@ from engine.pasofile.types import header
 
 
 
-class pasoInfo(QtGui.QGroupBox, Ui_GroupBox):
+class pasoInfo(QtGui.QGroupBox, Ui_pasoInfoGroup):
 
 
     def __init__(self):

@@ -7,7 +7,7 @@
 
 
 from PyQt4 import *
-from ui_pasopackagesgroup import Ui_GroupBox
+from ui_pasopackagesgroup import Ui_packagesGroup
 from engine.pasofile.types import packageList
 
 
@@ -18,7 +18,7 @@ from engine.pasofile.types import packageList
 
 
 
-class pasoPackages(QtGui.QGroupBox, Ui_GroupBox):
+class pasoPackages(QtGui.QGroupBox, Ui_packagesGroup):
 
 
     def __init__(self):
