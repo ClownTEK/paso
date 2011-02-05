@@ -1,60 +1,60 @@
 Paso is an installation builder for Pardus Linux.
 
-(This project is not maintained for Pardus 2009,
-I'm re-writing new version on my playground for Pardus 2011.
-I will commit it over here when ready)
-
-Pardus is installed by YALI (Yet Another Linux Installer).
+Pardus installation system is YALI (Yet Another Linux Installer).
 YALI sets up the system by pisi packages from the installation media.
 Paso just builds the special package repository for installation,
 it's not another installation method.
 
-Prepare process creates paso files containing repository packages
-list and special packages. Packages in the list are taken from the
-installed Pardus system, not from Internet repositories.
-
 Users can install or remove packages on their systems and
-create paso files for sharing.
+create paso files for sharing. Paso files are small gzipped XML files
+and thus can easily be shared, because it just contains list of packages.
+Packages in the list collects from the installed Pardus system,
+not from Internet repositories.
 
-Every user can build iso files from paso files by the build process.
-Paso build process collects the packages from local packages,
-Pardus installation CD's and Internet repos.
-
-Paso files are small tar.gz packages and thus can easily be shared.
-Everybody can build iso images on their own system.
+Everybody can build iso images on their own system by the Paso build process.
+Paso searches the packages from local resources, Pardus installation CD's and
+internet repositories then builds the installation repository.
 
 Fore more information about YALI, visit
 http://www.pardus.org.tr/eng/projeler/yali
 
+Or you need to Pardusman for creating installation from Pardus repositories directly.
+http://svn.pardus.org.tr/uludag/trunk/kde/pardusman/
 
 
-REQUIREMENTS
-    - python >= 2.5
+BUILD REQUIREMENTS
+    -python-qt-devel
+
+
+RUNTIME REQUIREMENTS
+    - python >= 2.7
     - qt >= 4.5
-    - cdrtools >= 2.01.01_alpha63
-    - syslinux >= 3.83
+    - cdrtools
+    - syslinux
 
 
 INSTALLATION
+    -Use Pisi package from Pardus repositories or download section of project home (if supported).
+    -You can also install without pisi package easily;
+        -Extract the archive
+        -Run commands;
+            python setup.py build
+            sudo python setup.py install
 
-    Use Pisi package from Pardus repositories or download section of project home
 
 
 RUN WITHOUT INSTALL
-
     -Extract the archive
     -Run command;
         python setup.py build
         python build/lib/paso.py
 
 
+
 TRANSLATION
+    -Open and edit ts/paso.ts file with Qt Linguist.
+    -Open and edit addfiles/paso.desktop file with your favorite text editor.
+    -When you’re ready you can send them back to me via email. (to <alierkanimrek at gmail.com>)
 
-    -Extract the archive
-    -Run command;
-        python setup.py build-po <lang>
-
-    -Translate the po file (You can use Poedit or Lokalize)
-    -E-mail me the translated .po file. <alierkanimrek at gmail.com>
 
 

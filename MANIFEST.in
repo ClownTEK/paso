@@ -1,11 +1,9 @@
-recursive-include po *
+recursive-include rc *
+recursive-include ts *
 recursive-include addfiles *
-recursive-include qt4 *
+recursive-include ui *
 recursive-include src *.py
 include AUTHORS ChangeLog COPYING README TODO
 prune build
 prune dist
 prune *.pyc
-prune *.pot
-prune *.po
-prune po/localize-scripts
