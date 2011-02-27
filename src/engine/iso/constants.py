@@ -20,4 +20,4 @@ const = _const()
 const.ISO_FILES = ["boot", "pardus.img", "license"]
 const.ISO_EXT = ".iso"
 const.MKISO_CMD = 'mkisofs -f -J -joliet-long -R -l -V "PardusLiveImage" -o "%s" -b boot/isolinux/isolinux.bin -c boot/isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table "%s"'
-const.MKHYBRID_CMD = "isohybrid -partok -offset 1 %s"
+const.MKHYBRID_CMD = 'isohybrid -partok -offset 1 "%s"'
