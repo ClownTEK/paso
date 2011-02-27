@@ -44,7 +44,7 @@ class pkgdir(object):
     def setTarget(self, p):
         self.__clear()
         self.__path = path.normpath(p)
-        print self.__path
+
 
 
 

@@ -107,7 +107,7 @@ class buildFromPath():
 
     def getNameList(self):
         pkgs = []
-        for pkg in self.__ins.getPackages().values():
+        for pkg in self.__ins.getPackages().keys():
             pkgs.append(pkg)
         return(pkgs)
 

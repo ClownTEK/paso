@@ -23,6 +23,7 @@ const.TRANSLATORS = "<p>"
 const.DESIGNERS = unicode("Abdülkerim AYDIN   &lt;a.kerim.aydin@gmail.com&gt; <p> ")
 
 const.APP_NAME = "paso"
+const.APP_LOGO = "Paso_logo32.png"
 const.APP_I18NDIR = "/usr/share/locale/"
 
 
@@ -46,3 +47,5 @@ const.CONF_FILE_GENERAL_PIM_PATH = "pimpath"
 const.DEFAULT_WORKSPACE = const.APP_NAME
 const.PIM_REPO = "repo"
 const.REMOTE_PREFIX = ["http://", "HTTP://"]
+
+const.INSTALLER_NAME = "yali"
