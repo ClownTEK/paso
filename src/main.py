@@ -369,6 +369,6 @@ class mainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.msg[23] = QtGui.QApplication.translate("MainDialog", "Paso file could not be opened.", None, QtGui.QApplication.UnicodeUTF8)
         self.msg[24] = QtGui.QApplication.translate("MainDialog", "Paso file could not be saved.", None, QtGui.QApplication.UnicodeUTF8)
         self.msg[25] = QtGui.QApplication.translate("MainDialog", "Please select root directory of Pardus installation which you want to build.", None, QtGui.QApplication.UnicodeUTF8)
-        self.msg[26] = QtGui.QApplication.translate("MainDialog", "Current root directory will be opened. If you want to build from current system, just click Open button on the next dialog.", None, QtGui.QApplication.UnicodeUTF8)
-        self.msg[27] = QtGui.QApplication.translate("MainDialog", "This packages cannot installable because Pardus installer application isn't be found in packages.", None, QtGui.QApplication.UnicodeUTF8)
+        self.msg[26] = QtGui.QApplication.translate("MainDialog", "Current root directory will be opened. If you want to build from current system, just click Ok button on the next dialog.", None, QtGui.QApplication.UnicodeUTF8)
+        self.msg[27] = QtGui.QApplication.translate("MainDialog", "This packages aren't installable because Pardus installer application isn't found in packages.", None, QtGui.QApplication.UnicodeUTF8)
         self.msg[28] = QtGui.QApplication.translate("MainDialog", "Please install Yali by this command 'pisi it -c system.installer' and try again.", None, QtGui.QApplication.UnicodeUTF8)
