@@ -105,8 +105,8 @@ class Build(build):
     def run(self):
         os.system("/bin/rm -rf build")
         clear()
-        logo = "rc/Paso_logo32.png"
-        desktop = "addfiles/paso.desktop"
+        logo = const.APP_LOGO
+        desktop = "addfiles/%s.desktop" %const.APP_NAME
         dirs = ["build/lib/%s" %const.APP_NAME,
                 "build/share/%s/translations" %const.APP_NAME,
                 "build/bin",
@@ -120,10 +120,12 @@ class Build(build):
         if not rcUpdate(dirs[0]):   return(False)
         self.copy_file("src/%s.py" %const.APP_NAME, "%s/%s" % (dirs[2], const.APP_NAME) )
         if not qmUpdate(dirs[1]):   return(False)
-        self.copy_file(logo, "%s/%s.png" %(dirs[4],const.APP_NAME))
-        self.copy_file(desktop, dirs[3])
+        try:
+            self.copy_file(logo, "%s/%s.png" %(dirs[4],const.APP_NAME))
+            self.copy_file(desktop, dirs[3])
+        except:
+            pass
         self.copy_file("src/%s.py" %const.APP_NAME, "build/lib/" )
-        #print("\n\nYou can run %s by this command; \n python build/lib/%s.py" %(const.APP_NAME, const.APP_NAME))
         print "Build succesful."
 
 
@@ -132,6 +134,9 @@ class Build(build):
 
 class Install(install):
     def run(self):
+        if not os.path.isfile("build/lib/%s/%s_rc.py" %(const.APP_NAME, const.APP_NAME) ):
+            print "Build process could not be completed."
+            return()
         lib = os.path.join(self.root, self.install_libbase, const.APP_NAME)
         usr = os.path.join(self.root, "/usr")
         exe = os.path.join(usr, "bin", const.APP_NAME)
@@ -140,8 +145,8 @@ class Install(install):
         os.system("cp -aRv build/bin %s" %usr)
         os.system("chmod +x %s" %exe )
         os.system("cp -aRv build/share %s" %usr)
-        os.system("/bin/rm build/lib/paso.py")
-        os.system("cp -aRv build/lib/paso/* %s" %lib)
+        os.system("/bin/rm build/lib/%s.py" %const.APP_NAME)
+        os.system("cp -aRv build/lib/%s/* %s" %(const.APP_NAME, lib) )
 
 
 
