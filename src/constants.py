@@ -16,7 +16,7 @@ class _const:
 const = _const()
 
 const.NAME = "Paso"
-const.VERSION = "2.0_Alpha"
+const.VERSION = "2.0_Beta"
 const.WEBPAGE = "http://github.com/alierkanimrek/paso"
 const.DEVELOPERS = unicode("Ali Erkan İMREK   &lt;alierkanimrek@gmail.com&gt; <p> ")
 const.TRANSLATORS = "<p>"
