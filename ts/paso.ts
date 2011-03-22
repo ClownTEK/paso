@@ -138,13 +138,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="373"/>
-        <source>This packages aren&apos;t installable because Pardus installer application isn&apos;t found in packages.</source>
+        <location filename="main.py" line="374"/>
+        <source>Please install Yali by this command &apos;pisi it -c system.installer&apos; and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="374"/>
-        <source>Please install Yali by this command &apos;pisi it -c system.installer&apos; and try again.</source>
+        <location filename="main.py" line="373"/>
+        <source>Pardus installer application could not be found in packages.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
