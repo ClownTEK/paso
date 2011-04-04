@@ -237,20 +237,24 @@ class mainWindow(QtGui.QMainWindow, Ui_MainWindow):
         for pkg in self.pasopackages.getFileList():
             if prg.stop:
                 return()
-                self.setProgress(prg, self.msg[9] , pkg, ratioCalc(total, current, 5, 1))
+            self.setProgress(prg, self.msg[9] , pkg, ratioCalc(total, current, 5, 1))
             pkgInfo = iso.searchPackage(pkg)
             if not pkgInfo:
                 self.message(self.msg[10], pkg)
                 return()
             elif not pkgInfo.path:
+                pass    #already on repo
+            else:
                 self.setProgress(prg, self.msg[11] , os.path.join(pkgInfo.path, pkg), ratioCalc(total, current, 5, 1))
-            iso.bringPackage(pkgInfo)
+                if not iso.bringPackage(pkgInfo):
+                    self.message(self.msg[29], pkg)
+                    return()
             current += 1
-            self.setProgress(prg, self.msg[12],self.msg[13], ratioCalc(100, 50, 5, 2))
+        self.setProgress(prg, self.msg[12],self.msg[13], ratioCalc(100, 50, 5, 2))
         if not iso.buildIndex():
             self.message(self.msg[14])
             return()
-            self.setProgress(prg, self.msg[15] , self.msg[13], ratioCalc(100, 50, 5, 3) )
+        self.setProgress(prg, self.msg[15] , self.msg[13], ratioCalc(100, 50, 5, 3) )
         if not iso.transferInstallationSystem():
             self.message(self.msg[16])
             return()
@@ -372,3 +376,4 @@ class mainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.msg[26] = QtGui.QApplication.translate("MainDialog", "Current root directory will be opened. If you want to build from current system, just click Ok button on the next dialog.", None, QtGui.QApplication.UnicodeUTF8)
         self.msg[27] = QtGui.QApplication.translate("MainDialog", "Pardus installer application could not be found in packages.", None, QtGui.QApplication.UnicodeUTF8)
         self.msg[28] = QtGui.QApplication.translate("MainDialog", "Please install Yali by this command 'pisi it -c system.installer' and try again.", None, QtGui.QApplication.UnicodeUTF8)
+        self.msg[29] = QtGui.QApplication.translate("MainDialog", "Pisi package could not be copied.", None, QtGui.QApplication.UnicodeUTF8)
