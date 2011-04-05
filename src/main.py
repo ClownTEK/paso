@@ -44,6 +44,7 @@ class mainWindow(QtGui.QMainWindow, Ui_MainWindow):
         QtCore.QObject.connect(self.actionBuild_installation_image,  QtCore.SIGNAL("triggered (bool)"),  self.isoBuild)
         QtCore.QObject.connect(self.actionPreferences,  QtCore.SIGNAL("triggered (bool)"),  self.openPreferences)
         QtCore.QObject.connect(self.actionAbout,  QtCore.SIGNAL("triggered (bool)"),  self.openAbout)
+        QtCore.QObject.connect(self.actionExport, QtCore.SIGNAL("triggered (bool)"), self.export)
 
         self.preferences = preferences()
         if not self.preferences.load():
@@ -80,6 +81,7 @@ class mainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.actionSave.setEnabled(False)
         self.actionBuild_installation_image.setEnabled(False)
         self.actionSave_as.setEnabled(False)
+        self.actionExport.setEnabled(False)
         self.setWindowTitle(const.NAME)
 
 
@@ -112,6 +114,7 @@ class mainWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.actionBuild_from_Installation.setEnabled(True)
                 self.actionSave.setEnabled(True)
                 self.actionSave_as.setEnabled(True)
+                self.actionExport.setEnabled(False)
                 self.actionBuild_installation_image.setEnabled(True)
                 self.setWindowTitle("%s   -   %s" %(const.NAME, self.pasoFName))
             else:
@@ -188,12 +191,13 @@ class mainWindow(QtGui.QMainWindow, Ui_MainWindow):
             header.pm = self.preferences.config.email
             self.pasoinfo.setHeader(header)
             self.pasopackages = pasoPackages()
-            self.pasopackages.setFromList(packages.getFileList())
+            self.pasopackages.setFromList(packages.getFileList(), packages.getNameList())
             self.pasopackages.changed = True
             self.horizontalLayout.addWidget(self.pasopackages)
             self.actionSave.setEnabled(True)
             self.actionBuild_installation_image.setEnabled(True)
             self.actionSave_as.setEnabled(True)
+            self.actionExport.setEnabled(True)
 
 
 
@@ -291,6 +295,18 @@ class mainWindow(QtGui.QMainWindow, Ui_MainWindow):
 
 
 
+    def export(self):
+        fileName = unicode( QtGui.QFileDialog.getSaveFileName(self, "", self.preferences.config.workspace,
+                const.EXPORT_TYPES %(self.msg[30], self.msg[31]) ) )
+        if fileName[len(fileName)-3:].lower() == "txt":
+            if not lib.savefile(fileName, str().join(map(lambda x: x+"\n", self.pasopackages.getNameList())) ):
+                self.message(self.msg[32], fileName)
+        if fileName[len(fileName)-3:].lower() == "xml":
+            pass
+
+
+
+
 
     def setProgress(self, prg,  name, action="", value=0):
         prg.show()
@@ -346,7 +362,7 @@ class mainWindow(QtGui.QMainWindow, Ui_MainWindow):
 
 
     def i18n(self):
-        self.msg = range(30)
+        self.msg = range(40)
         self.msg[0] = QtGui.QApplication.translate("MainDialog", "Welcome, Paso needs your personal information, please continue and create your profile.", None, QtGui.QApplication.UnicodeUTF8)
         self.msg[1] = QtGui.QApplication.translate("MainDialog", "The project has been modified.", None, QtGui.QApplication.UnicodeUTF8)
         self.msg[2] = QtGui.QApplication.translate("MainDialog", "Do you want to save your changes?", None, QtGui.QApplication.UnicodeUTF8)
@@ -377,3 +393,6 @@ class mainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.msg[27] = QtGui.QApplication.translate("MainDialog", "Pardus installer application could not be found in packages.", None, QtGui.QApplication.UnicodeUTF8)
         self.msg[28] = QtGui.QApplication.translate("MainDialog", "Please install Yali by this command 'pisi it -c system.installer' and try again.", None, QtGui.QApplication.UnicodeUTF8)
         self.msg[29] = QtGui.QApplication.translate("MainDialog", "Pisi package could not be copied.", None, QtGui.QApplication.UnicodeUTF8)
+        self.msg[30] = QtGui.QApplication.translate("MainDialog", "Text file for pisi", None, QtGui.QApplication.UnicodeUTF8)
+        self.msg[31] = QtGui.QApplication.translate("MainDialog", "XML File for Pardusman", None, QtGui.QApplication.UnicodeUTF8)
+        self.msg[32] = QtGui.QApplication.translate("MainDialog", "File could not be saved.", None, QtGui.QApplication.UnicodeUTF8)

@@ -49,3 +49,5 @@ const.PIM_REPO = "repo"
 const.REMOTE_PREFIX = ["http://", "HTTP://"]
 
 const.INSTALLER_NAME = "yali"
+
+const.EXPORT_TYPES = '%s (*.txt);; %s (*.xml)'

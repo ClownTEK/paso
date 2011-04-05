@@ -28,6 +28,7 @@ class pasoPackages(QtGui.QGroupBox, Ui_packagesGroup):
 
         self.changed = False
         self.__packages = packageList()
+        self.__names = []
 
         QtCore.QObject.connect(self.listWidget,  QtCore.SIGNAL("QListWidgetItem *"),  self.__onChange)
 
@@ -36,10 +37,11 @@ class pasoPackages(QtGui.QGroupBox, Ui_packagesGroup):
 
 
 
-    def setFromList(self, lst):
+    def setFromList(self, lst, names=[]):
         for pkg in lst:
             self.__packages.addFile(pkg)
         self.listWidget.addItems(lst)
+        self.__names = names
         self.changed = False
 
 
@@ -54,6 +56,10 @@ class pasoPackages(QtGui.QGroupBox, Ui_packagesGroup):
     def getFileList(self):
         return(self.__packages.files.keys())
 
+
+
+    def getNameList(self):
+        return(self.__names)
 
 
 
