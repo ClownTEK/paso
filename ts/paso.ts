@@ -3,236 +3,261 @@
 <context>
     <name>MainDialog</name>
     <message>
-        <location filename="main.py" line="346"/>
+        <location filename="main.py" line="366"/>
         <source>Welcome, Paso needs your personal information, please continue and create your profile.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="347"/>
+        <location filename="main.py" line="367"/>
         <source>The project has been modified.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="348"/>
+        <location filename="main.py" line="368"/>
         <source>Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="349"/>
+        <location filename="main.py" line="369"/>
         <source>Package list could not be read.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="350"/>
+        <location filename="main.py" line="370"/>
         <source>Loading information of packages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="351"/>
+        <location filename="main.py" line="371"/>
         <source>Package could not be read.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="352"/>
+        <location filename="main.py" line="372"/>
         <source>Pisi configuration could not be read.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="353"/>
+        <location filename="main.py" line="373"/>
         <source>Pisi repository information could not be read.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="354"/>
+        <location filename="main.py" line="374"/>
         <source>Directories could not be created on workspace.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="355"/>
+        <location filename="main.py" line="375"/>
         <source>Searching package...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="356"/>
+        <location filename="main.py" line="376"/>
         <source>Pisi package could not be found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="357"/>
+        <location filename="main.py" line="377"/>
         <source>Downloading or copying package...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="358"/>
+        <location filename="main.py" line="378"/>
         <source>Building repository index.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="359"/>
+        <location filename="main.py" line="379"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="360"/>
+        <location filename="main.py" line="380"/>
         <source>Installation repository index could not be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="361"/>
+        <location filename="main.py" line="381"/>
         <source>Copying installation system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="362"/>
+        <location filename="main.py" line="382"/>
         <source>Pardus installation system could not be copied from installation media.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="363"/>
+        <location filename="main.py" line="383"/>
         <source>Creating installation image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="364"/>
+        <location filename="main.py" line="384"/>
         <source>Installation image could not be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="365"/>
+        <location filename="main.py" line="385"/>
         <source>Calculating verification code (SHA1SUM).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="366"/>
+        <location filename="main.py" line="386"/>
         <source>Verification code could not be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="367"/>
+        <location filename="main.py" line="387"/>
         <source>Image successfully created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="368"/>
+        <location filename="main.py" line="388"/>
         <source>Project directories are creating on workspace.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="369"/>
+        <location filename="main.py" line="389"/>
         <source>Paso file could not be opened.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="370"/>
+        <location filename="main.py" line="390"/>
         <source>Paso file could not be saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="371"/>
+        <location filename="main.py" line="391"/>
         <source>Please select root directory of Pardus installation which you want to build.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="372"/>
+        <location filename="main.py" line="392"/>
         <source>Current root directory will be opened. If you want to build from current system, just click Ok button on the next dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="374"/>
+        <location filename="main.py" line="394"/>
         <source>Please install Yali by this command &apos;pisi it -c system.installer&apos; and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.py" line="373"/>
+        <location filename="main.py" line="393"/>
         <source>Pardus installer application could not be found in packages.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main.py" line="395"/>
+        <source>Pisi package could not be copied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main.py" line="396"/>
+        <source>Text file for pisi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main.py" line="397"/>
+        <source>XML File for Pardusman</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main.py" line="398"/>
+        <source>File could not be saved.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="ui_mainwindow.py" line="122"/>
+        <location filename="ui_mainwindow.py" line="127"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="132"/>
+        <location filename="ui_mainwindow.py" line="137"/>
         <source>Build</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="124"/>
+        <location filename="ui_mainwindow.py" line="129"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="125"/>
+        <location filename="ui_mainwindow.py" line="130"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="126"/>
+        <location filename="ui_mainwindow.py" line="131"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="127"/>
+        <location filename="ui_mainwindow.py" line="132"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="128"/>
+        <location filename="ui_mainwindow.py" line="133"/>
         <source>Save as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="129"/>
+        <location filename="ui_mainwindow.py" line="134"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="130"/>
+        <location filename="ui_mainwindow.py" line="135"/>
         <source>Build PASO from Installation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="131"/>
+        <location filename="ui_mainwindow.py" line="136"/>
         <source>Build from Repos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="133"/>
+        <location filename="ui_mainwindow.py" line="138"/>
         <source>Build from paso file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="134"/>
+        <location filename="ui_mainwindow.py" line="139"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="135"/>
+        <location filename="ui_mainwindow.py" line="140"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="136"/>
+        <location filename="ui_mainwindow.py" line="141"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="137"/>
+        <location filename="ui_mainwindow.py" line="142"/>
         <source>Analyze</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="138"/>
+        <location filename="ui_mainwindow.py" line="143"/>
         <source>Express Builder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ui_mainwindow.py" line="139"/>
+        <location filename="ui_mainwindow.py" line="144"/>
         <source>Build installation image (ISO)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ui_mainwindow.py" line="145"/>
+        <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
