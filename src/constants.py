@@ -17,9 +17,9 @@ const = _const()
 
 const.NAME = "Paso"
 const.VERSION = "2.1"
-const.WEBPAGE = "http://github.com/alierkanimrek/paso"
+const.WEBPAGE = "<p>http://github.com/alierkanimrek/paso"
 const.DEVELOPERS = unicode("Ali Erkan İMREK   &lt;alierkanimrek@gmail.com&gt; <p> ")
-const.TRANSLATORS = "<p>"
+const.TRANSLATORS = unicode("[Türkçe] Gürkan ULUÇ   &lt;gurkanuluc@hotmail.com&gt; <p>")
 const.DESIGNERS = unicode("Abdülkerim AYDIN   &lt;a.kerim.aydin@gmail.com&gt; <p> ")
 
 const.APP_NAME = "paso"

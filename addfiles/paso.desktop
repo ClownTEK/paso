@@ -1,6 +1,7 @@
 [Desktop Entry]
 Categories=Application;Utility;
 Comment=Installation Builder for Pardus Linux
+Comment[tr]=Pardus Linux için kurulum derleyicisi
 Encoding=UTF-8
 Exec=paso
 GenericName=Paso

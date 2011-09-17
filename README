@@ -52,9 +52,12 @@ RUN WITHOUT INSTALL
 
 
 TRANSLATION
-    -Open and edit ts/paso.ts file with Qt Linguist.
+    -Copy from paso.ts file and create your .ts file. 
+        -Example for Turkish is "tr_TR.ts". First string is "ISO 639 language code", second is "ISO 3166 country code"
+    -Open and edit ts/your.ts file with Qt Linguist. 
     -Open and edit addfiles/paso.desktop file with your favorite text editor.
     -When you’re ready you can send them back to me via email. (to <alierkanimrek at gmail.com>)
+    -
 
 
 
