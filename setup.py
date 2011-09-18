@@ -105,7 +105,7 @@ class Build(build):
     def run(self):
         os.system("/bin/rm -rf build")
         clear()
-        logo = const.APP_LOGO
+        logo = "rc/"+const.APP_LOGO
         desktop = "addfiles/%s.desktop" %const.APP_NAME
         dirs = ["build/lib/%s" %const.APP_NAME,
                 "build/share/%s/translations" %const.APP_NAME,
